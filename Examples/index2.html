@@ -1,0 +1,21 @@
+<!--Location Based on AR.js. Example #2. From your position (latitude and longitude), place a box near you.-->
+<html>
+    <head>
+        <title>AR.js Basic Projected Camera Example</title>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+        <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+        <!-- Look-at component. We don't need this now, but we will later. -->
+        <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
+    </head>
+    <body>
+    <a-scene
+        vr-mode-ui="enabled: false"
+        arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
+        renderer='antialias: true; alpha: true'>
+            <a-camera gps-projected-camera rotation-reader></a-camera>
+            <!--Change 'add-your-latitude' and 'add-your-longitude' with your latitude and longitude, without the <>.-->
+            <!--The color of the box can be change in the attribute 'material'-->
+            <a-box gps-projected-entity-place='latitude: add-your-latitude>; longitude: <add-your-longitude>' material='color: blue' scale='10 10 10'></a-box>
+        </a-scene>
+    </body>
+</html>
