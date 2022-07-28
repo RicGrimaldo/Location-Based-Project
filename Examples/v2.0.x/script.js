@@ -1,23 +1,19 @@
 window.onload = () => {
     const button = document.querySelector('button[data-action="change"]');
     button.innerText = '﹖';
-    let latitude;
-    let longitude;
-    navigator.geolocation.getCurrentPosition((position) => {
-        latitude = position.coords.latitude;
-        longitude = position.coords.longitude;
-    });
-    let places = staticLoadPlaces(latitude, longitude);
+    let places = staticLoadPlaces();
     renderPlaces(places);
 };
 
-function staticLoadPlaces(latitude, longitude) {
+//   At line 15 you have to set valid place coordinates
+
+function staticLoadPlaces() {
     return [
         {
             name: 'Pokèmon',
             location: {
-                lat: latitude,
-                lng: longitude,
+                // lat: <your-latitude>,
+                // lng: <your-longitude>,
             },
         },
     ];
@@ -26,19 +22,19 @@ function staticLoadPlaces(latitude, longitude) {
 var models = [
     {
         url: './assets/magnemite/scene.gltf',
-        scale: '0.5 0.5 0.5',
+        scale: '5 5 5',
         info: 'Magnemite, Lv. 5, HP 10/10',
         rotation: '0 180 0',
     },
     {
         url: './assets/articuno/scene.gltf',
-        scale: '0.2 0.2 0.2',
+        scale: '2 2 2',
         rotation: '0 180 0',
         info: 'Articuno, Lv. 80, HP 100/100',
     },
     {
         url: './assets/dragonite/scene.gltf',
-        scale: '0.08 0.08 0.08',
+        scale: '0.5 0.5 0.5',
         rotation: '0 180 0',
         info: 'Dragonite, Lv. 99, HP 150/150',
     },
