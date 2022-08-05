@@ -30,4 +30,8 @@ body {
 
 .open {background-color: #e3f2fd; transition: transform .3s ease-in-out, visibility .3s ease-in-out;}
 
-
+nav > ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
