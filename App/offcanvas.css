@@ -1,0 +1,32 @@
+html,
+body {
+    overflow-x: hidden; /* Prevent scroll on narrow devices */
+    margin: 0;
+}
+
+body {
+    padding-top: 56px;
+}
+
+.offcanvas-collapse {
+    position: fixed;
+    text-align: center;
+    top: 56px; /* Height of navbar */
+    bottom: 0;
+    right: 100%;
+    width: 100%;
+    padding-right: 1rem;
+    padding-left: 1rem;
+    overflow-y: auto;
+    visibility: hidden;
+    background-color: #e3f2fd;
+    transition: transform .3s ease-in-out, visibility .3s ease-in-out;
+}
+
+.offcanvas-collapse.open {
+    visibility: visible;
+    transform: translateX(100%);
+}
+
+.open {background-color: #e3f2fd; transition: transform .3s ease-in-out, visibility .3s ease-in-out;}
+
