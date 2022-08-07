@@ -19,16 +19,25 @@ body {
     padding-left: 1rem;
     overflow-y: auto;
     visibility: hidden;
-    background-color: #e3f2fd;
-    transition: transform .3s ease-in-out, visibility .3s ease-in-out;
+    background: linear-gradient(to right, #e3f2fd 50%, rgba(255, 255, 255, 0) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .3s ease-out;
 }
 
-.offcanvas-collapse.open {
+.offcanvas-collapse.open{
     visibility: visible;
     transform: translateX(100%);
+    background-position: left bottom;
 }
 
-.open {background-color: #e3f2fd; transition: transform .3s ease-in-out, visibility .3s ease-in-out;}
+#navbar.open { background-position: left bottom; }
+#navbar { 
+    background: linear-gradient(to right, #e3f2fd 50%, rgba(255, 255, 255, 0) 50%);
+    background-size: 200% 100%;
+    background-position: right bottom;
+    transition: all .3s ease-out;
+}
 
 nav > ul {
     display: flex;
@@ -36,35 +45,51 @@ nav > ul {
     align-items: center;
 }
 
-li{
-    padding: 10px;
-}
+li{ padding: 30px; }
+#ubication{ top: 20px;}
+#view{ bottom: 20px; }
 
-.buttons {
+.buttonPlus {
     position: absolute;
-    right: 10px;
-    bottom: 10px;
-    width: 100%;
+    right: 15px;
+    bottom: 7px;
+    width: auto;
+    height: auto;
     height: 5em;
     display: flex;
     justify-content:flex-end;
     align-items: center;
-    z-index: 10;
+    z-index: 1;
 }
 
-/* .say-hi-button {
-    padding: 0.25em;
-    border-radius: 4px;
-    border: none;
-    background: rgba(0, 0, 0, 0.205);
-    color: black;
-    width: 4em;
-    height: 2em;
+#location{
+    float: right;
+    right: 15px;
+    top: 7px;
+    width: auto;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.171);
+    border-radius: 15px 0 0 15px;
+    padding: 10px;
+    z-index: 2;
 }
 
-.navbar-toggler-icon{
-    background-color: rgba(0, 0, 0, 0.205);
-    border-radius: 5px;
+/* #textoPrueba{
+    float: right;
+    left: 15px;
+    top: 30px;
+    width: auto;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.171);
+    border-radius: 15px 0 0 15px;
+    padding: 10px;
+    z-index: 2;
 } */
 
-/*How to change the navbar icon color*/
+a-scene{ z-index: -1;}
+
+#location p{
+    display: block;
+    font-size: 14px;
+    color: white;
+}
