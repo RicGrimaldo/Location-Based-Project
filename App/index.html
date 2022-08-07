@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html>
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -14,31 +14,93 @@
     </head>
     <body class="bg-light">
         
-    <nav class="navbar navbar-expand-lg fixed-top" aria-label="Main navigation" id="navbar">
+    <nav class="navbar navbar-expand-xxl fixed-top" aria-label="Main navigation" id="navbar">
         <div class="container-fluid" id="navbarDiv">
-            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation"> 
-                <span class="navbar-toggler-icon toggler-icon" id="toggleButton" width="30" height="30"></span>
+            <button class="navbar-toggler p-0 border-0" type="button" id="navbarSideCollapse" aria-label="Toggle navigation" aria-expanded="false" data-bs-toggle="collapse"> 
+                <img src="Assets/menu-icon.svg" width="40" height="40" class="toggle" id="menu-icon">
             </button>
 
             <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item">
+                    <li class="nav-item" id="ubication">
                         <a class="nav-link active" aria-current="page" href="#"><h2>Agregar ubicación</h2></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#"><h2>Listado de ubicaciones</h2></a>
+                        <a class="nav-link" href="list.html"><h2>Listado de ubicaciones</h2></a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#"><h2>Vista</h2></a>
+                    <li class="nav-item" id="view">
+                        <a class="nav-link" href="view.html"><h2>Vista</h2></a>
                     </li>
                 </ul>
             </div>
         </div>
     </nav>
 
-    <div class="buttons">
-        <button class="say-hi-button">SAY HI!</button>
+    <button class="btn buttonPlus" data-bs-toggle="modal" data-bs-target="#modal">
+        <img src="Assets/plus-circle.svg" width="35" height="35" id="plusBtn">
+    </button>
+    <div class="modal fade" id="modal" tabindex="-1" aria-labelledby="ModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ModalLabel">Selecciona el tipo de archivo: </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="3DObjectRadio" id="3DObject" checked>
+                            <label class="form-check-label" for="3DObject">
+                                Objeto 3D (.gltf, .glb, .zip; tamaño máximo 50MB)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="imageRadio" id="image">
+                            <label class="form-check-label" for="image">
+                                Imagen (.png, .jpg, .gif; tamaño máximo 15MB)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="videoRadio" id="video">
+                            <label class="form-check-label" for="video">
+                                Video (.mp4; tamaño máximo 25MB)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="textRadio" id="text">
+                            <label class="form-check-label" for="text">
+                                Texto (máximo 10 palabras)
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="text&imgRadio" id="text&img">
+                            <label class="form-check-label" for="text&img">
+                                Imagen (.png, .jpg, .gif; tamaño máximo 15MB) con texto.
+                            </label>
+                        </div>
+                        <div class="mb-3">
+                            <label for="formFile" class="form-label"></label>
+                            <input class="form-control" type="file" id="formFile">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Subir archivo</button>
+                </div>
+            </div>
+        </div>
     </div>
+
+    <div id="location">
+        <p id="latitude"></p>
+        <p id="longitude"></p>
+    </div>
+
+    <!-- <div id="textoPrueba">
+        <p id="texto1"></p>
+        <p id="texto2"></p>
+    </div> -->
 
     <a-scene
         vr-mode-ui="enabled: false"
@@ -47,7 +109,7 @@
             <a-camera gps-projected-camera rotation-reader></a-camera>
             <!--Change 'add-your-latitude' and 'add-your-longitude' with your latitude and longitude, without the <>.-->
             <!--The color of the box can be change in the attribute 'material'-->
-            <a-box gps-projected-entity-place='latitude: <add-your-latitude>; longitude: <add-your-longitude>;' material='color: blue' scale='10 10 10'></a-box>
+            <a-box gps-projected-entity-place='latitude: <add-your-latitude>; longitude: <add-your-longitude>;'material='color: blue' scale='10 10 10' id="caja"></a-box>
     </a-scene>
 
     <script src="Js/Navbar.js"></script>
