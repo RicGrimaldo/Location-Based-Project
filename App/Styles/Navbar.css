@@ -51,10 +51,11 @@ li{ padding: 30px; }
 
 .buttonPlus {
     position: absolute;
+    border: none;
     right: 15px;
     bottom: 7px;
-    width: auto;
-    height: auto;
+    width: 40px;
+    height: 40px;
     height: 5em;
     display: flex;
     justify-content:flex-end;
@@ -70,7 +71,7 @@ li{ padding: 30px; }
     height: auto;
     background-color: rgba(0, 0, 0, 0.171);
     border-radius: 15px 0 0 15px;
-    padding: 10px;
+    padding: 5px;
     z-index: 2;
 }
 
@@ -90,6 +91,6 @@ a-scene{ z-index: -1;}
 
 #location p{
     display: block;
-    font-size: 14px;
+    font-size: 16px;
     color: white;
 }

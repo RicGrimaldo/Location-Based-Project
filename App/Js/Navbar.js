@@ -6,7 +6,7 @@
         document.getElementById('menu-icon').classList.toggle('toggle');
         var menuIcon = document.getElementById('menu-icon');
         if(menuIcon.classList.contains('toggle')){
-            menuIcon.src="Assets/menu-icon.svg";
+            menuIcon.src="Assets/menu-icon.png";
         }
         else{
             menuIcon.src = "Assets/x-lg.svg";
