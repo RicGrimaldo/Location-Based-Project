@@ -86,7 +86,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
-                    <button type="button" class="btn btn-primary">Subir archivo</button>
+                    <button type="button" class="btn btn-primary" id="btnSubirArchivo">Subir archivo</button>
                 </div>
             </div>
         </div>
@@ -97,19 +97,11 @@
         <p id="longitude"></p>
     </div>
 
-    <!-- <div id="textoPrueba">
-        <p id="texto1"></p>
-        <p id="texto2"></p>
-    </div> -->
-
     <a-scene
         vr-mode-ui="enabled: false"
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer='antialias: true; alpha: true'>
             <a-camera gps-projected-camera rotation-reader></a-camera>
-            <!--Change 'add-your-latitude' and 'add-your-longitude' with your latitude and longitude, without the <>.-->
-            <!--The color of the box can be change in the attribute 'material'-->
-            <a-box gps-projected-entity-place='latitude: <add-your-latitude>; longitude: <add-your-longitude>;'material='color: blue' scale='10 10 10' id="caja"></a-box>
     </a-scene>
 
     <script src="Js/Navbar.js"></script>
