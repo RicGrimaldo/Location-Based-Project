@@ -54,7 +54,8 @@ document.getElementById('btnSubirArchivo').addEventListener('click', function(){
                     contentType: false,
                     processData: false,
                     data: form_data,
-                success:function(dat2){
+            success:function(dat2){
+                if(dat2 === "\"success\""){
                     setTimeout( function() { 
                         Swal.fire({
                             position: 'top-end',
@@ -63,16 +64,14 @@ document.getElementById('btnSubirArchivo').addEventListener('click', function(){
                             showConfirmButton: false,
                             timer: 1500
                         })
+                        $('#modal').modal('hide'); 
+                        $('#secondModal').modal('show'); 
                     }, 1500 );
                 }
+                else console.log("Hubo un error");
+            }
         });
-        $("#btnClose").click();
     }
-    else{
-        //  How to not display the second modal
-        document.getElementById('secondModal').style.display = "none";
-    }
-
 });
 
 const fileValidation = function(){
