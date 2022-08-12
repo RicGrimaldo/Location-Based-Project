@@ -75,18 +75,6 @@ li{ padding: 30px; }
     z-index: 2;
 }
 
-/* #textoPrueba{
-    float: right;
-    left: 15px;
-    top: 30px;
-    width: auto;
-    height: auto;
-    background-color: rgba(0, 0, 0, 0.171);
-    border-radius: 15px 0 0 15px;
-    padding: 10px;
-    z-index: 2;
-} */
-
 a-scene{ z-index: -1;}
 
 #location p{

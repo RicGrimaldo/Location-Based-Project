@@ -1,5 +1,6 @@
 let latitude, longitude;
 let flag = false;
+const btnSubirArchivo = document.getElementById('btnSubirArchivo');
 (() => {
     'use strict'
     document.querySelector('#navbarSideCollapse').addEventListener('click', () => {
@@ -25,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
-document.getElementById('btnSubirArchivo').addEventListener('click', function(){
+btnSubirArchivo.addEventListener('click', function(){
     // if(!flag){
     //     let scene = document.querySelector('a-scene');
     //     var model = document.createElement("a-image");
@@ -39,7 +40,6 @@ document.getElementById('btnSubirArchivo').addEventListener('click', function(){
     if(fileValidation()){
 
         let file_type = document.querySelector('input[name=file]:checked').value;
-
         var filename = (parseInt(Math.random()*(999999999999 - 100000000) + 100000000)).toString();   
         var file_data = $('#formFile').prop('files')[0];    
         var form_data = new FormData();
@@ -55,8 +55,12 @@ document.getElementById('btnSubirArchivo').addEventListener('click', function(){
                     processData: false,
                     data: form_data,
             success:function(dat2){
-                if(dat2 === "\"success\""){
-                    setTimeout( function() { 
+                if(dat2 != "\"error\""){
+                    btnSubirArchivo.setAttribute('disabled','');
+                    btnSubirArchivo.innerHTML = 
+                        ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                        <span>Cargando...</span>`;
+                    setTimeout( function() {
                         Swal.fire({
                             position: 'top-end',
                             icon: 'success',
@@ -66,7 +70,11 @@ document.getElementById('btnSubirArchivo').addEventListener('click', function(){
                         })
                         $('#modal').modal('hide'); 
                         $('#secondModal').modal('show'); 
+                        btnSubirArchivo.removeAttribute('disabled');
+                        btnSubirArchivo.innerHTML = '';
                     }, 1500 );
+                    
+                    paintModal(dat2);
                 }
                 else console.log("Hubo un error");
             }
@@ -78,7 +86,7 @@ const fileValidation = function(){
     let file_type = document.querySelector('input[name=file]:checked').value;
     var fileInput = document.getElementById('formFile');
     var filePath = fileInput.value;
-    let text, allowedExtensions;
+    let allowedExtensions;
     switch(file_type){
         case '3DObj':
             allowedExtensions = /(.gltf|.glb|.zip)$/i;
@@ -114,6 +122,10 @@ const fileValidation = function(){
             break;
     }
     return true;
+}
+
+function paintModal(fileName){
+    document.getElementById('savedImg').src = './Files/' + JSON.parse(fileName);
 }
 
 function showAlert(message, status){
