@@ -1,6 +1,7 @@
 let latitude, longitude;
 let flag = false;
 const btnSubirArchivo = document.getElementById('btnSubirArchivo');
+const bytesToMB = bytes => bytes / (1024 ** 2);
 (() => {
     'use strict'
     document.querySelector('#navbarSideCollapse').addEventListener('click', () => {
@@ -85,7 +86,9 @@ btnSubirArchivo.addEventListener('click', function(){
 const fileValidation = function(){
     let file_type = document.querySelector('input[name=file]:checked').value;
     var fileInput = document.getElementById('formFile');
+    var file_data = $('#formFile').prop('files')[0];    
     var filePath = fileInput.value;
+    console.log(bytesToMB(file_data.size));
     let allowedExtensions;
     switch(file_type){
         case '3DObj':
@@ -95,11 +98,21 @@ const fileValidation = function(){
                 fileInput.value = '';
                 return false;
             }
+            else if(bytesToMB(file_data.size) > 50){
+                showAlert('El tamaño del archivo rebasa los 50MB, escoge un archivo más pequeño.', 'error');
+                fileInput.value = '';
+                return false;
+            }
             break;
         case 'img':
-            allowedExtensions = /(.jpg|.png|.gif)$/i;
+            allowedExtensions = /(.jpg|.png|.jpeg|.gif)$/i;
             if(!allowedExtensions.exec(filePath)){
-                showAlert('Debes ingresar una extensión válida (.png, .jpg, .gif)', 'error');
+                showAlert('Debes ingresar una extensión válida (.png, .jpg, .jpeg, .gif)', 'error');
+                fileInput.value = '';
+                return false;
+            }
+            else if(bytesToMB(file_data.size) > 10){
+                showAlert('El tamaño del archivo rebasa los 10MB, escoge una imagen más pequeña.', 'error');
                 fileInput.value = '';
                 return false;
             }
@@ -111,11 +124,21 @@ const fileValidation = function(){
                 fileInput.value = '';
                 return false;
             }
+            else if(bytesToMB(file_data.size) > 25){
+                showAlert('El tamaño del archivo rebasa los 25MB, escoge un video más pequeño.', 'error');
+                fileInput.value = '';
+                return false;
+            }
             break;
         case 'txt&img':
-            allowedExtensions = /(.jpg|.png|.gif)$/i;
+            allowedExtensions = /(.jpg|.png|.jpeg|.gif)$/i;
             if(!allowedExtensions.exec(filePath)){
-                showAlert('Debes ingresar una extensión válida (.png, .jpg, .gif)', 'error');
+                showAlert('Debes ingresar una extensión válida (.png, .jpg, .jpeg, .gif)', 'error');
+                fileInput.value = '';
+                return false;
+            }
+            else if(bytesToMB(file_data.size) > 10){
+                showAlert('El tamaño del archivo rebasa los 10MB, escoge una imagen más pequeña.', 'error');
                 fileInput.value = '';
                 return false;
             }
@@ -134,7 +157,7 @@ function showAlert(message, status){
             toast: true,
             position: 'top-end',
             showConfirmButton: false,
-            timer: 2000
+            timer: 2500
         })
         Toast.fire({
             icon: 'warning',
