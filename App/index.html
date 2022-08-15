@@ -86,7 +86,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnClose">Cerrar</button>
-                    <button type="button" class="btn btn-primary" id="btnSubirArchivo">Subir archivo</button>
+                    <button type="button" class="btn btn-primary" id="btnUploadFile">Subir archivo</button>
                 </div>
             </div>
         </div>
@@ -97,20 +97,20 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="staticBackdropLabel">Guardar</h5>
+                    <h5 class="modal-title" id="staticBackdropLabel">Guardar ubicación</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btnClose2Modal"></button>
                 </div>
                 <div class="modal-body">
                     <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                        <label for="floatingInput">Etiqueta: </label>
+                        <input type="email" class="form-control" id="UbicationTag" placeholder="name@example.com">
+                        <label for="UbicationTag">Etiqueta para el archivo: </label>
                     </div>
                     <p>Archivo seleccionado: </p>
                     <img src="" class="rounded mx-auto d-block" alt="Saved image" id="savedImg" width="150px">
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnClose2">Cancelar</button>
-                    <button type="button" class="btn btn-primary">Guardar</button>
+                    <button type="button" class="btn btn-primary" id="btnSaveFile">Guardar</button>
                 </div>
             </div>
         </div>
@@ -131,5 +131,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="Js/Navbar.js"></script>
+    <script src="Js/Main.js"></script>
 </body>
 </html>
