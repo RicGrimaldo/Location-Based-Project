@@ -5,6 +5,13 @@ const btnSaveFile = document.getElementById('btnSaveFile');
 const bytesToMB = bytes => bytes / (1024 ** 2);
 let ubications = [];
 
+document.addEventListener('DOMContentLoaded', function() {
+    if((localStorage.getItem('ubications'))){
+        ubications = JSON.parse(localStorage.getItem('ubications'));
+    }
+});
+
+
 // Ubication object
 function Ubication(id, tag, file_type, latitude, longitude, route_file) {
     this.id = id;
