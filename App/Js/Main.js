@@ -2,6 +2,7 @@ let latitude, longitude;
 let flag = false;
 const btnUploadFile = document.getElementById('btnUploadFile');
 const btnSaveFile = document.getElementById('btnSaveFile');
+const sourceFile = document.getElementById('sourceFile');
 const bytesToMB = bytes => bytes / (1024 ** 2);
 let ubications = [];
 
@@ -162,7 +163,23 @@ const fileValidation = function(){
 
 function paintModal(fileName, file_type){
     let route_file = './Files/' + JSON.parse(fileName);
-    document.getElementById('savedImg').src = route_file;
+    let file;
+    switch(file_type){
+        case '3DObj':
+            
+            break;
+        case 'img':
+            file = `<img src="${route_file}" class="rounded mx-auto d-block" alt="Saved image" id="savedImg" width="150px">`;
+            break;
+        case 'video':
+            file = `<div class="ratio ratio-16x9">
+                        <video controls>
+                        <source src="${route_file}" type="video/mp4">
+                        Tu navegador no soporta la etiqueta video.
+                        </video>
+                    </div>`
+            break;
+    }
     let tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
     localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
 }

@@ -20,14 +20,25 @@ const loadUbications = function(){
 
 const paintCards = function(){
     let file;
+    let scene = document.querySelector('a-camera');
     for(var i = 0; i < ubications.length; i++){
-        let scene = document.querySelector('a-camera');
-        file = `<a-image
+        file = file_output(ubications[i]);
+        scene.outerHTML += file;
+        alert(file);
+    }
+}
+
+const file_output = function(ubication){
+    let file;
+    switch(ubication.file_type){
+        case 'img':
+            file = `<a-image
                 src="${ubications[i].route_file}"
                 scale="1 1 1"
                 gps-entity-place="latitude:${ubications[i].latitude}; longitude: ${ubications[i].longitude}"
             ></a-image>`;
-        scene.outerHTML += file;
-        alert(file);
+            return file;
+        // case 'video':
+        //     file = 
     }
 }
