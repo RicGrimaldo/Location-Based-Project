@@ -180,6 +180,7 @@ function paintModal(fileName, file_type){
                     </div>`
             break;
     }
+    document.getElementById('sourceFile').innerHTML = file;
     let tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
     localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
 }

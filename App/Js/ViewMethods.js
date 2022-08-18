@@ -20,25 +20,52 @@ const loadUbications = function(){
 
 const paintCards = function(){
     let file;
-    let scene = document.querySelector('a-camera');
+    let scene = document.getElementById('scene');
     for(var i = 0; i < ubications.length; i++){
         file = file_output(ubications[i]);
-        scene.outerHTML += file;
+        scene.innerHTML += file;
         alert(file);
     }
+    $("#scene").contents().unwrap();
 }
 
 const file_output = function(ubication){
     let file;
+    let asset = document.querySelector('a-assets');
     switch(ubication.file_type){
         case 'img':
             file = `<a-image
-                src="${ubications[i].route_file}"
+                src="${ubication.route_file}"
                 scale="1 1 1"
-                gps-entity-place="latitude:${ubications[i].latitude}; longitude: ${ubications[i].longitude}"
+                gps-entity-place="latitude:${ubication.latitude}; longitude: ${ubication.longitude}"
             ></a-image>`;
-            return file;
-        // case 'video':
-        //     file = 
+            break;
+        case 'video':
+            asset.innerHTML += `<video
+                    src="${ubication.route_file}"
+                    preload="auto"
+                    id="${ubication.id}"
+                    response-type="arraybuffer"
+                    crossorigin
+                    muted
+                    autoplay
+                    height="240px"
+                    loop
+                ></video>`;
+            file = `<a-video
+                src="#${ubication.id}"
+                position='0 0.1 0'
+                videohandler
+                smooth="true"
+                smoothCount="10"
+                smoothTolerance="0.01"
+                smoothThreshold="5"
+                autoplay="false"
+                scale="0.5 0.5 0.5"
+                gps-entity-place="latitude: latitude: ${ubication.latitude}; longitude: ${ubication.longitude};"
+            ></a-video>`;
+            break;
     }
+    console.log(file);
+    return file;
 }
