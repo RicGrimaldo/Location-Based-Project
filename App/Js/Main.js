@@ -87,14 +87,20 @@ btnSaveFile.addEventListener('click', function(){
     //  Comprobar que no esté vacío el input
     let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
     tag = document.getElementById('UbicationTag').value;
-    tmp_ubication = new Ubication(tmp_file.file_Name, tag, tmp_file.file_type, 
-                                latitude, longitude, tmp_file.route_file);
-    console.log(tmp_ubication);
-    ubications.push(tmp_ubication);
-    localStorage.setItem('ubications',JSON.stringify(ubications));
-    $('#secondModal').modal('hide'); 
-    showAlert('Datos guardados correctamente', 'success');
-    setTimeout( function() { window.location.href = "view.html"; }, 2500 );
+    if(value.length != 0){
+        tmp_ubication = new Ubication(tmp_file.file_Name, tag, tmp_file.file_type, 
+                                    latitude, longitude, tmp_file.route_file);
+        console.log(tmp_ubication);
+        ubications.push(tmp_ubication);
+        localStorage.setItem('ubications',JSON.stringify(ubications));
+        $('#secondModal').modal('hide'); 
+        showAlert('Datos guardados correctamente', 'success');
+        setTimeout( function() { window.location.href = "view.html"; }, 2500 );
+    }
+    else{
+        showAlert("Debe ingresar una etiqueta", "error");
+        document.getElementById('UbicationTag').focus();
+    }
 });
 
 const fileValidation = function(){

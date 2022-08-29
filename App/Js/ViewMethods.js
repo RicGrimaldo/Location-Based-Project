@@ -61,7 +61,7 @@ const file_output = function(ubication){
                 smoothTolerance="0.01"
                 smoothThreshold="5"
                 autoplay="false"
-                scale="0.5 0.5 0.5"
+                scale="1 1 1"
                 gps-entity-place="latitude: latitude: ${ubication.latitude}; longitude: ${ubication.longitude};"
             ></a-video>`;
             break;
