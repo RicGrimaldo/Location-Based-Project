@@ -14,6 +14,8 @@
             window.onload = () => {
                 navigator.geolocation.getCurrentPosition((position) => {
                     document.querySelector('a-entity').setAttribute('gps-entity-place', `latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`)
+                    setTimeout( function() { document.querySelector('a-image').setAttribute('gps-entity-place', `latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`) }, 2500 );
+                    
             });
             }
         </script>
@@ -27,29 +29,37 @@
             arjs="sourceType: webcam; debugUIEnabled: false;"
         >
         <a-assets>
-            <a-asset-item id="van-gogh-obj" src="https://ucarecdn.com/e153ca1c-4143-4b6b-b009-1b8709ec9737/"></a-asset-item>
-            <a-asset-item id="van-gogh-mtl" src="https://ucarecdn.com/24b28257-c674-4852-a7f3-f839d0a4a521/"></a-asset-item>
+            <!-- <a-asset-item id="van-gogh-obj" src="https://ucarecdn.com/e153ca1c-4143-4b6b-b009-1b8709ec9737/"></a-asset-item>
+            <a-asset-item id="van-gogh-mtl" src="https://ucarecdn.com/24b28257-c674-4852-a7f3-f839d0a4a521/"></a-asset-item> -->
             <a-asset-item id="animated-asset" src="assets/asset.glb"></a-asset-item>
             <img id='earth' src='https://raw.githubusercontent.com/aframevr/sample-assets/master/assets/images/space/earth_atmos_4096.jpg' />
         </a-assets>
-            <!-- <a-entity
+            <a-entity
                 look-at="[gps-camera]"
                 rotation="0 360 0"
                 animation = "property: rotation; dur: 8000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: false;"
                 animation-mixer="loop: repeat"
                 gltf-model="#animated-asset"
-                scale="1.133763319879117 1.133763319879117 1.133763319879117"
+                scale="0.5 0.5 0.5"
                 class="clickable"
                 gesture-handler 
+                maxDistance="1"
                 > 
-            </a-entity> -->
+            </a-entity>
 
+
+            <a-image
+                look-at="[gps-camera]"
+                src="assets/location_map_pin_mark_icon_148685.png"
+                scale="1 1 1"
+                > 
+            </a-entity>
         <!--You can choose between using the tick (above), or the planet Earth (below). -->
 
-            <a-sphere material='src: #earth;' position="0 0.5 0" radius="1" segments-height="53">
+            <!-- <a-sphere material='src: #earth;' position="0 0.5 0" radius="1" segments-height="53">
                 <a-animation attribute="rotation" dur="7000" to="0 360 0" easing="linear" repeat="indefinite">
                 </a-animation>
-            </a-sphere>
+            </a-sphere> -->
         
             <a-camera gps-camera rotation-reader></a-camera>
         </a-scene>
