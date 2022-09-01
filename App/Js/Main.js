@@ -12,7 +12,6 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-
 // Ubication object
 function Ubication(id, tag, file_type, latitude, longitude, route_file) {
     this.id = id;
@@ -30,16 +29,6 @@ function TmpFile(file_Name, file_type, route_file){
 }
 
 btnUploadFile.addEventListener('click', function(){
-    // if(!flag){
-    //     let scene = document.querySelector('a-scene');
-    //     var model = document.createElement("a-image");
-    //     model.setAttribute('gps-entity-place', `latitude:`+ latitude + `; longitude: ` + longitude);
-    //     model.setAttribute('look-at', '[gps-camera]');
-    //     model.setAttribute('scale', '2 2 2');
-    //     model.setAttribute('src','./Assets/libro.png');
-    //     scene.appendChild(model);
-    //     flag = true;
-    // }
     if(fileValidation()){
         var filename = (parseInt(Math.random()*(999999999999 - 100000000) + 100000000)).toString();   
         var file_data = $('#formFile').prop('files')[0];    

@@ -7,13 +7,15 @@
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
-    <script>
+    <!-- <script>
         window.onload = () => {
             navigator.geolocation.getCurrentPosition((position) => {
+                alert(`latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`);
                 document.querySelector('a-text').setAttribute('gps-entity-place', `latitude: ${position.coords.latitude}; longitude: ${position.coords.longitude};`)
+                alert(JSON.stringify(document.getElementById('texto1').getAttribute('gps-entity-place')) + ' y ' + JSON.stringify(document.getElementById('texto2').getAttribute('gps-entity-place')));
         });
         }
-    </script>
+    </script> -->
     </head>
 
     <body style="margin: 0; overflow: hidden;">
@@ -24,9 +26,26 @@
     >
     <!--The attribute 'value' is the text that will be shown-->
         <a-text
-        value="No markers around"
+        wrap-count="25"
+        width="auto"
+        value="Lorem ipsum dolor sit amet. Et ipsam natus vel omnis temporibus eos dicta consequatur 33 unde necessitatibus et nulla nobis. Id quisquam aperiam hic odit earum id dicta vitae eos molestiae omnis ex sapiente voluptate ea sunt quia vel odio placeat! Sed reiciendis quia ut praesentium quia a ullam totam ab deleniti dolorum rem ipsum eligendi et asperiores modi."
         look-at="[gps-camera]"
-        scale="5 5 5"
+        align="center"
+        anchor="center"
+        baseline="center"
+        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
+        id="texto1"
+        ></a-text>
+        <a-text
+        wrap-count="25"
+        width="auto"
+        value="Lectus cum massa porttitor justo sagittis pulvinar etiam erat placerat, tempor vel ultricies scelerisque nisi hendrerit sed lacus curabitur, suscipit sociis bibendum habitant nunc porta vitae rhoncus. Velit commodo fermentum dictum venenatis accumsan fringilla, ut justo arcu neque felis phasellus taciti, litora ornare senectus ultrices habitasse. Primis rutrum sed nisl donec leo nunc ante, sociis vivamus aptent curae eros erat libero fames, consequat ut pretium pharetra suspendisse ad et, tempus posuere metus mus sagittis tortor. Lacinia integer mattis interdum laoreet conubia quisque platea pellentesque tellus, malesuada vitae felis fusce netus commodo natoque scelerisque condimentum, lacus cubilia facilisi dictumst tortor ac nibh risus."
+        look-at="[gps-camera]"
+        align="center"
+        anchor="center"
+        baseline="center"
+        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
+        id="texto2"
         ></a-text>
         <a-camera gps-camera rotation-reader> </a-camera>
     </a-scene>
