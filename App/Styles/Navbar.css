@@ -82,3 +82,10 @@ a-scene{ z-index: -1;}
     font-size: 16px;
     color: white;
 }
+
+#limitCharTag{
+    width: 100%;
+    text-align: right;
+    margin-top: 15px;
+    color: #737373;
+}

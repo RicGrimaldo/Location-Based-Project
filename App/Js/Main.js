@@ -3,13 +3,16 @@ let flag = false;
 const btnUploadFile = document.getElementById('btnUploadFile');
 const btnSaveFile = document.getElementById('btnSaveFile');
 const sourceFile = document.getElementById('sourceFile');
+const UbicationTag = document.getElementById('UbicationTag');
 const bytesToMB = bytes => bytes / (1024 ** 2);
 let ubications = [];
+const limitCharTag = document.getElementById("limitCharTag");
 
 document.addEventListener('DOMContentLoaded', function() {
     if((localStorage.getItem('ubications'))){
         ubications = JSON.parse(localStorage.getItem('ubications'));
     }
+    limitCharTag.textContent = 0 + "/" + 20;
 });
 
 // Ubication object
@@ -78,8 +81,13 @@ btnUploadFile.addEventListener('click', function(){
 //  Before saving the file, the empty input validation occurs
 btnSaveFile.addEventListener('click', function(){
     let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
-    tag = document.getElementById('UbicationTag').value;
+    tag = UbicationTag.value;
     if(tag.length != 0){
+        if(tag.length >= 20){
+            showAlert("La etiqueta debe tener máximo 20 caracteres", "error");
+            UbicationTag.focus();
+            return;
+        }
         //  The new file and location are uploaded
         tmp_ubication = new Ubication(tmp_file.file_Name, tag, tmp_file.file_type, 
                                     latitude, longitude, tmp_file.route_file);
@@ -93,7 +101,7 @@ btnSaveFile.addEventListener('click', function(){
     }
     else{
         showAlert("Debe ingresar una etiqueta", "error");
-        document.getElementById('UbicationTag').focus();
+        UbicationTag.focus();
     }
 });
 
@@ -188,6 +196,11 @@ function paintModal(fileName, file_type){
     localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
 }
 
+//  Limit Character for the ubication tag
+UbicationTag.addEventListener('input', function(){
+    limitChar(UbicationTag, limitCharTag, 20);
+});
+
 //  Depending of the status, a different message will be shown
 function showAlert(message, status){
     if(status.toLowerCase() == 'error'){
@@ -219,5 +232,20 @@ function showAlert(message, status){
             icon: 'success',
             title: message
         })
+    }
+}
+
+//  Limit characters of an input
+function limitChar(input, result, limit){
+    var textLength = input.value.length;
+    result.textContent = textLength + "/" + limit;
+
+    if(textLength > limit){
+        input.style.borderColor = "#ff2851";
+        result.style.color = "#ff2851";
+    }
+    else{
+        input.style.borderColor = "#b2b2b2";
+        result.style.color = "#737373";
     }
 }
