@@ -28,7 +28,9 @@ function TmpFile(file_Name, file_type, route_file){
     this.route_file = route_file;
 }
 
+//Upload File function
 btnUploadFile.addEventListener('click', function(){
+    //  File validation will be done first (file size and extension file)
     if(fileValidation()){
         var filename = (parseInt(Math.random()*(999999999999 - 100000000) + 100000000)).toString();   
         var file_data = $('#formFile').prop('files')[0];    
@@ -36,7 +38,7 @@ btnUploadFile.addEventListener('click', function(){
         var form_data = new FormData();
         form_data.append("file",file_data);
         form_data.append("filename",filename);
-
+        //  By ajax, the request will be processed via PHP
         $.ajax({
             url: "./PHP/validateFile.php",                      
                     type: "POST",
@@ -47,6 +49,7 @@ btnUploadFile.addEventListener('click', function(){
                     data: form_data,
             success:function(dat2){
                 if(dat2 != "\"error\""){
+                    //  In the success situation, the second modal will be shown and the file will be saved.
                     btnUploadFile.setAttribute('disabled','');
                     btnUploadFile.innerHTML = 
                         ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -72,14 +75,16 @@ btnUploadFile.addEventListener('click', function(){
     }
 });
 
+//  Before saving the file, the empty input validation occurs
 btnSaveFile.addEventListener('click', function(){
-    //  Comprobar que no esté vacío el input
     let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
     tag = document.getElementById('UbicationTag').value;
-    if(value.length != 0){
+    if(tag.length != 0){
+        //  The new file and location are uploaded
         tmp_ubication = new Ubication(tmp_file.file_Name, tag, tmp_file.file_type, 
                                     latitude, longitude, tmp_file.route_file);
         console.log(tmp_ubication);
+        //  The new location is saved
         ubications.push(tmp_ubication);
         localStorage.setItem('ubications',JSON.stringify(ubications));
         $('#secondModal').modal('hide'); 
@@ -92,6 +97,7 @@ btnSaveFile.addEventListener('click', function(){
     }
 });
 
+//  File size and extension file validations
 const fileValidation = function(){
     let file_type = document.querySelector('input[name=file]:checked').value;
     var fileInput = document.getElementById('formFile');
@@ -156,6 +162,7 @@ const fileValidation = function(){
     return true;
 }
 
+//  Depending of the file type, the second modal will show it.
 function paintModal(fileName, file_type){
     let route_file = './Files/' + JSON.parse(fileName);
     let file;
@@ -175,11 +182,13 @@ function paintModal(fileName, file_type){
                     </div>`
             break;
     }
+    //  The new file tag will be shown in the modal
     document.getElementById('sourceFile').innerHTML = file;
     let tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
     localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
 }
 
+//  Depending of the status, a different message will be shown
 function showAlert(message, status){
     if(status.toLowerCase() == 'error'){
         const Toast = Swal.mixin({

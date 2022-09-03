@@ -1,3 +1,4 @@
+//  For menu icon
 (() => {
     'use strict'
     document.querySelector('#navbarSideCollapse').addEventListener('click', () => {
@@ -14,6 +15,7 @@
     })
 })()
 
+//  Displaying user real-time position 
 document.addEventListener('DOMContentLoaded', function() {
     navigator.geolocation.watchPosition((position) => {
         document.getElementById('latitude').innerHTML = `Latitud: ` + position.coords.latitude.toFixed(7);
