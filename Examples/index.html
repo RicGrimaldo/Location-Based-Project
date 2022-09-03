@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <title>GeoAR.js demo</title>
     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="https://raw.githack.com/AR-js-org/AR.js/master/three.js/build/ar-threex-location-only.js"></script>
     <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
     <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
     </head>
@@ -14,17 +15,19 @@
     <a-scene
         vr-mode-ui="enabled: false"
         embedded
-        arjs="sourceType: webcam; debugUIEnabled: false;"
+        arjs="sourceType: webcam; videoTexture: true; debugUIEnabled: false;"
     >
     <!--Change 'add-your-latitude' and 'add-your-longitude' with your latitude and longitude, without the <>.-->
     <!--The attribute 'value' is the text that will be shown-->
         <a-text
         value="This content will always face you."
         look-at="[gps-camera]"
-        scale="120 120 120"
-        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>;"
+        scale="5 5 5"
+        wrap-count="25"
+        width="auto"
+        gps-entity-place="latitude: <add-your-latitude>; longitude: <add-your-longitude>"
         ></a-text>
-        <a-camera gps-camera rotation-reader> </a-camera>
+        <a-camera gps-camera="maxDistance: 1;" rotation-reader> </a-camera>
     </a-scene>
     </body>
 </html>
