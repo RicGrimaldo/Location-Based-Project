@@ -103,11 +103,16 @@
                 <div class="modal-body">
                     <div class="form-floating mb-3">
                         <input type="email" class="form-control" id="UbicationTag" placeholder="name@example.com">
-                        <label for="UbicationTag">Etiqueta para el archivo: </label>
-                        <p id="limitCharTag"></p>
+                        <label for="UbicationTag" id="tagLabel">Etiqueta para el archivo: </label>
+                        <p id="limitCharTag" class="limitChr"></p>
                     </div>
-                    <p>Archivo seleccionado: </p>
+                    <p id="selectedTag">Archivo seleccionado: </p>
                     <div id="sourceFile"></div>
+                    <div class="mb-3" id="txtAreaDiv">
+                        <label for="txtArea" class="form-label">Ingrese el texto: </label>
+                        <textarea class="form-control" id="txtArea" rows="3"></textarea>
+                    </div>
+                    <p id="limitChartxt" class="limitChr">0/200</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnClose2">Cancelar</button>

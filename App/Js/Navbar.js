@@ -1,3 +1,4 @@
+let latitude, longitude;
 //  For menu icon
 (() => {
     'use strict'

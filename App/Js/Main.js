@@ -1,4 +1,3 @@
-let latitude, longitude;
 let flag = false;
 const btnUploadFile = document.getElementById('btnUploadFile');
 const btnSaveFile = document.getElementById('btnSaveFile');
@@ -7,6 +6,8 @@ const UbicationTag = document.getElementById('UbicationTag');
 const bytesToMB = bytes => bytes / (1024 ** 2);
 let ubications = [];
 const limitCharTag = document.getElementById("limitCharTag");
+const txtArea = document.getElementById('txtArea');
+const limitChartxt = document.getElementById('limitChartxt');
 
 document.addEventListener('DOMContentLoaded', function() {
     if((localStorage.getItem('ubications'))){
@@ -16,13 +17,14 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 // Ubication object
-function Ubication(id, tag, file_type, latitude, longitude, route_file) {
+function Ubication(id, tag, file_type, latitude, longitude, route_file, text) {
     this.id = id;
     this.tag = tag;
     this.file_type = file_type;
     this.latitude = latitude;
     this.longitude = longitude;
     this.route_file = route_file;
+    this.text = text;
 }
 
 function TmpFile(file_Name, file_type, route_file){
@@ -31,8 +33,36 @@ function TmpFile(file_Name, file_type, route_file){
     this.route_file = route_file;
 }
 
+//  When a radio button is selected
+$("input[name=file]").change(function () {	 
+    if(($(this).val()) === 'txt'){
+        $("#formFile").attr("disabled", "");
+        btnUploadFile.innerText = 'Siguiente';
+    } else{
+        $("#formFile").removeAttr("disabled");
+        btnUploadFile.innerText = 'Guardar archivo';
+    }
+});
+
 //Upload File function
 btnUploadFile.addEventListener('click', function(){
+    //  In the case that the text option is selected, the process will be different of the file process
+    if(($('input:radio[name=file]:checked').val()) === 'txt'){
+        btnUploadFile.setAttribute('disabled','');
+        btnUploadFile.innerHTML = 
+            ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+            <span>Cargando...</span>`;
+        setTimeout( function() {
+            $('#modal').modal('hide'); 
+            $('#secondModal').modal('show'); 
+            btnUploadFile.removeAttribute('disabled');
+            btnUploadFile.innerHTML = '';
+        }, 1500 );
+        //  It won't have a name, it's a text after all
+        paintModal(null, 'txt');
+        return;
+    }
+    console.log("Como no es txt, seguimos");
     //  File validation will be done first (file size and extension file)
     if(fileValidation()){
         var filename = (parseInt(Math.random()*(999999999999 - 100000000) + 100000000)).toString();   
@@ -80,7 +110,9 @@ btnUploadFile.addEventListener('click', function(){
 
 //  Before saving the file, the empty input validation occurs
 btnSaveFile.addEventListener('click', function(){
-    let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
+    let text = '';
+    let file_name = '', tag = '';
+    let file_type = '', route_file = '';
     tag = UbicationTag.value;
     if(tag.length != 0){
         if(tag.length >= 20){
@@ -88,9 +120,21 @@ btnSaveFile.addEventListener('click', function(){
             UbicationTag.focus();
             return;
         }
+        //  In the case where the text was selected
+        if($("#txtAreaDiv").css("display") === 'block'){
+            text = $("#txtArea").val();
+        }else{
+            let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
+            localStorage.removeItem('ActualFile');
+            file_name = tmp_file.file_Name;
+            file_type = tmp_file.file_type;
+            route_file = tmp_file.route_file;
+        }
         //  The new file and location are uploaded
-        tmp_ubication = new Ubication(tmp_file.file_Name, tag, tmp_file.file_type, 
-                                    latitude, longitude, tmp_file.route_file);
+        // In the case of the text, the object only will have the ubication,
+        // the tag, the file type and the text itself
+        tmp_ubication = new Ubication(file_name, tag, file_type, 
+                                    latitude, longitude, route_file, text);
         console.log(tmp_ubication);
         //  The new location is saved
         ubications.push(tmp_ubication);
@@ -172,8 +216,25 @@ const fileValidation = function(){
 
 //  Depending of the file type, the second modal will show it.
 function paintModal(fileName, file_type){
-    let route_file = './Files/' + JSON.parse(fileName);
-    let file;
+    let route_file = '';
+    let tmp_file;
+    //  The modal will be different in the case that a text will be shown
+    if(file_type != 'txt'){ 
+        console.log("Como no es txt, sino "+file_type+", guardamos la ruta:\n")
+        route_file = './Files/' + JSON.parse(fileName);
+        console.log(route_file);
+        tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
+        localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
+        $('#txtAreaDiv').css("display","none");
+        $('#limitChartxt').css("display","none");
+    } else {
+        $('#selectedTag').remove();
+        $('#sourceFile').remove();
+        $('#tagLabel').text("Etiqueta para el texto: ");
+        $('#txtAreaDiv').css("display","block");
+        $('#limitChartxt').css("display","block");
+    }
+    let file = '';
     switch(file_type){
         case '3DObj':
             
@@ -192,14 +253,17 @@ function paintModal(fileName, file_type){
     }
     //  The new file tag will be shown in the modal
     document.getElementById('sourceFile').innerHTML = file;
-    let tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
-    localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
 }
 
 //  Limit Character for the ubication tag
 UbicationTag.addEventListener('input', function(){
     limitChar(UbicationTag, limitCharTag, 20);
 });
+
+//  limit Character for the textArea
+document.getElementById('txtArea').addEventListener('input', function(){
+    limitChar(txtArea,limitChartxt, 200);
+})
 
 //  Depending of the status, a different message will be shown
 function showAlert(message, status){

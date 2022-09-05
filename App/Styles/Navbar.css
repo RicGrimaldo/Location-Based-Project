@@ -83,9 +83,11 @@ a-scene{ z-index: -1;}
     color: white;
 }
 
-#limitCharTag{
+.limitChr{
     width: 100%;
     text-align: right;
     margin-top: 15px;
     color: #737373;
 }
+
+#txtAreaDiv, #limitChartxt{ display: none;}
