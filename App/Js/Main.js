@@ -4,6 +4,7 @@ const btnSaveFile = document.getElementById('btnSaveFile');
 const sourceFile = document.getElementById('sourceFile');
 const UbicationTag = document.getElementById('UbicationTag');
 const bytesToMB = bytes => bytes / (1024 ** 2);
+let randomName = () => (parseInt(Math.random()*(999999999999 - 100000000) + 100000000)).toString();   
 let ubications = [];
 const limitCharTag = document.getElementById("limitCharTag");
 const txtArea = document.getElementById('txtArea');
@@ -65,7 +66,7 @@ btnUploadFile.addEventListener('click', function(){
     console.log("Como no es txt, seguimos");
     //  File validation will be done first (file size and extension file)
     if(fileValidation()){
-        var filename = (parseInt(Math.random()*(999999999999 - 100000000) + 100000000)).toString();   
+        var filename = randomName();   
         var file_data = $('#formFile').prop('files')[0];    
         let file_type = document.querySelector('input[name=file]:checked').value;
         var form_data = new FormData();
@@ -123,6 +124,8 @@ btnSaveFile.addEventListener('click', function(){
         //  In the case where the text was selected
         if($("#txtAreaDiv").css("display") === 'block'){
             text = $("#txtArea").val();
+            file_name = randomName();
+            file_type = 'txt';
         }else{
             let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
             localStorage.removeItem('ActualFile');
