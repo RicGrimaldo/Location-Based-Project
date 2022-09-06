@@ -240,7 +240,9 @@ function paintModal(fileName, file_type){
     let file = '';
     switch(file_type){
         case '3DObj':
-            
+            file = `<div id="div3D">
+                        <model-viewer src="${route_file}" camera-controls auto-rotate disable-zoom></model-viewer>
+                    </div>`;
             break;
         case 'img':
             file = `<img src="${route_file}" class="rounded mx-auto d-block" alt="Saved image" id="savedImg" width="150px">`;
