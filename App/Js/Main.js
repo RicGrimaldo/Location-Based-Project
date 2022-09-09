@@ -78,7 +78,7 @@ btnUploadFile.addEventListener('click', function(){
         form_data.append("action","upload_file");
         //  By ajax, the request will be processed via PHP
         $.ajax({
-            url: "./PHP/validateFile.php",                      
+            url: "./PHP/ServerMethods.php",                      
                     type: "POST",
                     dataType: 'script',
                     cache: false,
@@ -257,7 +257,7 @@ document.getElementById('btnViewFiles').addEventListener('click',function(){
     var folder_name = '../Files';
     var action = 'fetch_files';
     $.ajax({
-        url:"./PHP/validateFile.php",
+        url:"./PHP/ServerMethods.php",
         method:"POST",
         data:{
             action: action,

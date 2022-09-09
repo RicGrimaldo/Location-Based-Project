@@ -1,4 +1,5 @@
 <?php 
+//  Depending of the method, is what will be done.
     if($_POST["action"] == "upload_file"){
         $filename = $_POST['filename'];
         if(!file_exists('../Files')){
@@ -13,12 +14,12 @@
         }
         else echo json_encode('error');
     }
-    
+
     if($_POST["action"] == "fetch_files"){
         $file_data = scandir($_POST["folder_name"]);
         $imgExtensions = array('jpg', 'jpeg', 'png', 'gif');
         $vidExtensions = array('mp4');
-        $objExtensions = array('gltf','glb', 'zip');
+        $objExtensions = array('gltf','glb');
         $file_type = '';
         $output = '
             <div class="row row-cols-1 row-cols-md-3 g-4">
