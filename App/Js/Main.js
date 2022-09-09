@@ -15,6 +15,8 @@ document.addEventListener('DOMContentLoaded', function() {
         ubications = JSON.parse(localStorage.getItem('ubications'));
     }
     limitCharTag.textContent = 0 + "/" + 20;
+    $('#modal').modal('show'); 
+
 });
 
 // Ubication object
@@ -58,6 +60,7 @@ btnUploadFile.addEventListener('click', function(){
             $('#secondModal').modal('show'); 
             btnUploadFile.removeAttribute('disabled');
             btnUploadFile.innerHTML = '';
+            btnUploadFile.innerText = 'Subir archivo';
         }, 1500 );
         //  It won't have a name, it's a text after all
         paintModal(null, 'txt');
@@ -72,6 +75,7 @@ btnUploadFile.addEventListener('click', function(){
         var form_data = new FormData();
         form_data.append("file",file_data);
         form_data.append("filename",filename);
+        form_data.append("action","upload_file");
         //  By ajax, the request will be processed via PHP
         $.ajax({
             url: "./PHP/validateFile.php",                      
@@ -100,6 +104,7 @@ btnUploadFile.addEventListener('click', function(){
                         $('#secondModal').modal('show'); 
                         btnUploadFile.removeAttribute('disabled');
                         btnUploadFile.innerHTML = '';
+                        btnUploadFile.innerText = 'Subir archivo';
                     }, 1500 );
                     paintModal(dat2, file_type);
                 }
@@ -162,9 +167,9 @@ const fileValidation = function(){
     let allowedExtensions;
     switch(file_type){
         case '3DObj':
-            allowedExtensions = /(.gltf|.glb|.zip)$/i;
+            allowedExtensions = /(.gltf|.glb)$/i;
             if(!allowedExtensions.exec(filePath)){
-                showAlert('Debes ingresar una extensión válida (.gltf, .glb, .zip)', 'error');
+                showAlert('Debes ingresar una extensión válida (.gltf, .glb)', 'error');
                 fileInput.value = '';
                 return false;
             }
@@ -196,19 +201,6 @@ const fileValidation = function(){
             }
             else if(bytesToMB(file_data.size) > 25){
                 showAlert('El tamaño del archivo rebasa los 25MB, escoge un video más pequeño.', 'error');
-                fileInput.value = '';
-                return false;
-            }
-            break;
-        case 'txt&img':
-            allowedExtensions = /(.jpg|.png|.jpeg|.gif)$/i;
-            if(!allowedExtensions.exec(filePath)){
-                showAlert('Debes ingresar una extensión válida (.png, .jpg, .jpeg, .gif)', 'error');
-                fileInput.value = '';
-                return false;
-            }
-            else if(bytesToMB(file_data.size) > 10){
-                showAlert('El tamaño del archivo rebasa los 10MB, escoge una imagen más pequeña.', 'error');
                 fileInput.value = '';
                 return false;
             }
@@ -259,6 +251,24 @@ function paintModal(fileName, file_type){
     //  The new file tag will be shown in the modal
     document.getElementById('sourceFile').innerHTML = file;
 }
+
+//  To display the list of the server files.
+document.getElementById('btnViewFiles').addEventListener('click',function(){
+    var folder_name = '../Files';
+    var action = 'fetch_files';
+    $.ajax({
+        url:"./PHP/validateFile.php",
+        method:"POST",
+        data:{
+            action: action,
+            folder_name: folder_name
+        },
+        success:function(data){
+            $("#file_list").html(data);
+            $("#fileListModal").modal("show");
+        }
+    })
+})
 
 //  Limit Character for the ubication tag
 UbicationTag.addEventListener('input', function(){

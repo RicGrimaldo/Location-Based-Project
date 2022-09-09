@@ -1,6 +1,6 @@
 # Location Based Project
 
-Location Based Project repository for virtual reality, developed with the AR.js library.
+Location Based Project repository for augmented  reality, developed with the AR.js library.
 
 ## Documentation
 

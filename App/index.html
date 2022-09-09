@@ -52,7 +52,7 @@
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="file" id="3DObject" checked value="3DObj">
                             <label class="form-check-label" for="3DObject">
-                                Objeto 3D (.gltf, .glb, .zip; tamaño máximo 50MB)
+                                Objeto 3D (.gltf, .glb; tamaño máximo 50MB)
                             </label>
                         </div>
                         <div class="form-check">
@@ -73,15 +73,16 @@
                                 Texto (máximo 10 palabras)
                             </label>
                         </div>
-                        <div class="form-check">
-                            <input class="form-check-input" type="radio" name="file" id="text&img" value="txt&img">
-                            <label class="form-check-label" for="text&img">
-                                Imagen (.png, .jpg, .jpeg, .gif; tamaño máximo 10MB) con texto.
-                            </label>
-                        </div>
-                        <div class="mb-3">
-                            <label for="formFile" class="form-label"></label>
+                        <div class="mb-3" style="margin: 10px;">
+                            <label for="formFile" class="form-label">Seleccionar un archivo de su dispositivo: </label>
                             <input class="form-control" type="file" id="formFile" name="fileUpload">
+                        </div>
+                        <p id="o">o</p>
+                        <div class="mb-3">
+                            <div>Seleccionar un archivo del servidor:</div>
+                            <div class="d-grid gap-2">
+                                <button class="btn btn-primary" type="button" id="btnViewFiles">Ver lista de archivos</button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -118,6 +119,24 @@
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnClose2">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="btnSaveFile">Guardar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="fileListModal" class="modal fade" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Lista de archivos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body" id="file_list">
+                    <!--Files List display-->
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    <button type="button" class="btn btn-primary">Siguiente</button>
                 </div>
             </div>
         </div>
