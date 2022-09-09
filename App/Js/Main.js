@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', function() {
         ubications = JSON.parse(localStorage.getItem('ubications'));
     }
     limitCharTag.textContent = 0 + "/" + 20;
-    $('#modal').modal('show'); 
-
 });
 
 // Ubication object
