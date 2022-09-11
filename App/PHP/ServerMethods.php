@@ -21,6 +21,7 @@
         $vidExtensions = array('mp4');
         $objExtensions = array('gltf','glb');
         $file_type = '';
+        $fl_type = '';
         $output = '
             <div class="row row-cols-1 row-cols-md-3 g-4">
         ';
@@ -33,11 +34,13 @@
                 $path = 'Files/'.$file;
                 $extension = pathinfo($path, PATHINFO_EXTENSION);
                 if(in_array($extension, $imgExtensions)){
+                    $fl_type = 'img';
                     $file_type = 'Imagen';
                     $output .= '
                         <img src="'.$path.'" class="card-img-top" alt="imagen">';
                 }
                 if(in_array($extension, $vidExtensions)){
+                    $fl_type = 'video';
                     $file_type = 'Video';
                     $output .= '
                         <div class="ratio ratio-16x9">
@@ -49,6 +52,7 @@
                 }
                 if(in_array($extension, $objExtensions)){
                     $file_type = 'Objeto 3D';
+                    $fl_type = '3DObj';
                     $output .= '
                     <div id="div3D">
                         <model-viewer 
@@ -62,7 +66,12 @@
                 $output .= '
                         <div class="card-body">
                             <h5 class="card-title">Archivo: '.$file_type.'</h5>
-                            <button type="button" class="btn btn-primary" id="'.$path.'">
+                            <button 
+                                name="select_file" 
+                                type="button" 
+                                class="select_file btn btn-primary" 
+                                id="'.$path.'"
+                                value="'.$fl_type.'">
                             Seleccionar</button>
                         </div>
                     </div>

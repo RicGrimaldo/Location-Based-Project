@@ -12,7 +12,12 @@ function Ubication(id, tag, file_type, latitude, longitude, route_file, text) {
 }
 
 document.addEventListener('DOMContentLoaded', function() {
-    loadUbications();
+    if (localStorage.getItem('ubications')) {
+        loadUbications();
+    }
+    else{
+        showAlert("No hay ninguna ubicación agregada.", "error");
+    }
 });
 
 const loadUbications = function(){
@@ -40,6 +45,7 @@ const file_output = function(ubication, i){
                 src="${ubication.route_file}"
                 scale="1 1 1"
                 gps-entity-place="latitude:${ubication.latitude}; longitude: ${ubication.longitude}"
+                id="${ubication.id}"
             ></a-image>`;
             break;
         case 'video':
@@ -79,6 +85,24 @@ const file_output = function(ubication, i){
             gps-entity-place="latitude:${ubication.latitude}; longitude: ${ubication.longitude}"
             id="#${ubication.id}"
             ></a-text>`;
+            break;
+        case '3DObj':
+            asset.innerHTML += `<a-asset-item 
+                                    src="${ubication.route_file}"
+                                    id="${ubication.id}">
+                                </a-asset-item>`;
+            file = `<a-entity
+                    look-at="[gps-camera]"
+                    rotation="0 360 0"
+                    animation = "property: rotation; dur: 8000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: false;"
+                    animation-mixer="loop: repeat"
+                    gps-entity-place="latitude:${ubication.latitude}; longitude: ${ubication.longitude}"
+                    gltf-model="#${ubication.id}"
+                    scale="0.5 0.5 0.5"
+                    class="clickable"
+                    gesture-handler 
+                    > 
+                </a-entity>`;
             break;
     }
     console.log(file);

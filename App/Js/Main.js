@@ -1,4 +1,4 @@
-let flag = false;
+let flagSelected = false;
 const btnUploadFile = document.getElementById('btnUploadFile');
 const btnSaveFile = document.getElementById('btnSaveFile');
 const sourceFile = document.getElementById('sourceFile');
@@ -61,10 +61,9 @@ btnUploadFile.addEventListener('click', function(){
             btnUploadFile.innerText = 'Subir archivo';
         }, 1500 );
         //  It won't have a name, it's a text after all
-        paintModal(null, 'txt');
+        paintModal(null, 'txt', null);
         return;
     }
-    console.log("Como no es txt, seguimos");
     //  File validation will be done first (file size and extension file)
     if(fileValidation()){
         var filename = randomName();   
@@ -104,7 +103,7 @@ btnUploadFile.addEventListener('click', function(){
                         btnUploadFile.innerHTML = '';
                         btnUploadFile.innerText = 'Subir archivo';
                     }, 1500 );
-                    paintModal(dat2, file_type);
+                    paintModal(dat2, file_type, null);
                 }
                 else console.log("Hubo un error");
             }
@@ -208,13 +207,17 @@ const fileValidation = function(){
 }
 
 //  Depending of the file type, the second modal will show it.
-function paintModal(fileName, file_type){
+function paintModal(fileName, file_type, path){
     let route_file = '';
     let tmp_file;
     //  The modal will be different in the case that a text will be shown
     if(file_type != 'txt'){ 
-        console.log("Como no es txt, sino "+file_type+", guardamos la ruta:\n")
-        route_file = './Files/' + JSON.parse(fileName);
+        if(flagSelected){
+            flagSelected = false;
+            route_file = path;
+        } else{ 
+            route_file = './Files/' + JSON.parse(fileName);
+        }
         console.log(route_file);
         tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
         localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
@@ -268,6 +271,27 @@ document.getElementById('btnViewFiles').addEventListener('click',function(){
     })
 })
 
+//  In the case that a server file is selected
+$(document).on('click', '.select_file', function(){
+    var path = $(this).attr("id");
+    var file_type = $(this).attr("value");
+    flagSelected = true;
+    $('#fileListModal').modal('hide'); 
+    btnUploadFile.setAttribute('disabled','');
+    showAlert("Archivo seleccionado", "success");
+    btnUploadFile.innerHTML = 
+        ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span>Cargando...</span>`;
+    setTimeout( function() {
+        $('#modal').modal('hide'); 
+        $('#secondModal').modal('show'); 
+        btnUploadFile.removeAttribute('disabled');
+        btnUploadFile.innerHTML = '';
+        btnUploadFile.innerText = 'Subir archivo';
+    }, 1500 );
+    paintModal('"'+randomName()+'"',file_type, path);
+})
+
 //  Limit Character for the ubication tag
 UbicationTag.addEventListener('input', function(){
     limitChar(UbicationTag, limitCharTag, 20);
@@ -277,40 +301,6 @@ UbicationTag.addEventListener('input', function(){
 document.getElementById('txtArea').addEventListener('input', function(){
     limitChar(txtArea,limitChartxt, 200);
 })
-
-//  Depending of the status, a different message will be shown
-function showAlert(message, status){
-    if(status.toLowerCase() == 'error'){
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2500
-        })
-        Toast.fire({
-            icon: 'warning',
-            title: message
-        })
-    }
-    else if(status.toLowerCase() == 'success'){
-        const Toast = Swal.mixin({
-            toast: true,
-            position: 'top-end',
-            showConfirmButton: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: (toast) => {
-                toast.addEventListener('mouseenter', Swal.stopTimer)
-                toast.addEventListener('mouseleave', Swal.resumeTimer)
-            }
-        })
-    
-        Toast.fire({
-            icon: 'success',
-            title: message
-        })
-    }
-}
 
 //  Limit characters of an input
 function limitChar(input, result, limit){

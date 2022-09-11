@@ -29,7 +29,7 @@
                             <a class="nav-link" href="list.html"><h2>Listado de ubicaciones</h2></a>
                         </li>
                         <li class="nav-item" id="view">
-                            <a class="nav-link active" href="#"><h2>Vista</h2></a>
+                            <a class="nav-link active" href="#" id="ubiPage"><h2>Vista</h2></a>
                         </li>
                     </ul>
                 </div>
@@ -45,14 +45,13 @@
         vr-mode-ui="enabled: false"
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer='antialias: true; alpha: true'>
-        <a-assets>
-
-        </a-assets>
+        <a-assets></a-assets>
             <a-camera gps-projected-camera rotation-reader></a-camera>
             <div id="scene"></div>
     </a-scene>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="Js/Navbar.js"></script>
     <script src="Js/ViewMethods.js"></script>
 </body>
