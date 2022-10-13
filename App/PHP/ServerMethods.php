@@ -1,5 +1,5 @@
 <?php 
-header("Access-Control-Allow-Origin: *");
+header("Access-Control-Allow-Origin: *"); 
 header("Access-Control-Allow-Methods: *");
 //  Depending of the method, is what will be done.
     if($_POST["action"] == "upload_file"){
