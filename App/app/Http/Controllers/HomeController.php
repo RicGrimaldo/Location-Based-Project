@@ -34,6 +34,11 @@ class HomeController extends Controller
     }
 
     public function changePasswordPost(Request $request) {
+        $validatedData = $request->validate([
+            'current-password' => 'required',
+            'new-password' => 'required|string|min:8|confirmed',
+        ]);
+        
         if (!(Hash::check($request->get('current-password'), Auth::user()->password))) {
             // The passwords matches
             Alert::error('Error de contraseña', 'Tu antigua contraseña no coincide con la que has ingresado.');
@@ -46,10 +51,7 @@ class HomeController extends Controller
             return redirect()->back();
         }
 
-        $validatedData = $request->validate([
-            'current-password' => 'required',
-            'new-password' => 'required|string|min:8|confirmed',
-        ]);
+        
 
         //Change Password
         $user = Auth::user();
