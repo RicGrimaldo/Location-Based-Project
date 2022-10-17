@@ -22,9 +22,11 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
+            @if (request()->is('/'))
                 <a class="navbar-brand" href="{{ url('/') }}">
-                    {{ config('app.name', 'Location Based Project') }}
+                    <div><img src="/assets/go-back-arrow.svg" alt="" style="max-height: 25px;"></div>
                 </a>
+            @endif
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                     <span class="navbar-toggler-icon"></span>
                 </button>
