@@ -22,7 +22,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-            @if (request()->is('/'))
+            @if (!request()->is('/'))
                 <a class="navbar-brand" href="{{ url('/') }}">
                     <div><img src="/assets/go-back-arrow.svg" alt="" style="max-height: 25px;"></div>
                 </a>
@@ -55,6 +55,8 @@
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <!-- Change password -->
                                     <a class="dropdown-item" href="{{ route('changePasswordGet') }}">Cambiar contraseña</a>
+
+                                    <a class="dropdown-item" href="{{ route('files') }}">Lista de archivos</a>
                                     
                                     <a class="dropdown-item" href="{{ route('logout') }}"
                                         onclick="event.preventDefault();
