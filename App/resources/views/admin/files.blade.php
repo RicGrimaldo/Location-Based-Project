@@ -2,13 +2,43 @@
 
 @section('content')
 <div class="container">
+    <div class="d-md-flex justify-content-md-end mb-4">
+        <button class="btn btn-primary">Subir archivo</button>
+    </div>
     <div class="row">
                 @foreach($files as $file)
                     <div class="col-4 pb-4">
                         <div class="card h-100">
-                            <img src="storage/{{ $file }}" 
-                            class="card-img-top w-100" 
-                            alt="">
+                            @php
+                                $extension = pathinfo($file, PATHINFO_EXTENSION);
+                                $imgExtensions = array('jpg', 'jpeg', 'png', 'gif');
+                                $objExtensions = array('gltf','glb');
+                            @endphp
+                            @if(in_array($extension, $imgExtensions))
+                                <img src="storage/{{ $file }}" 
+                                class="card-img-top w-100" 
+                                alt="">
+                            @elseif(in_array($extension, $objExtensions))
+                                <div id="div3D">
+                                    <model-viewer 
+                                        src="storage/{{ $file }}"
+                                        camera-controls 
+                                        auto-rotate 
+                                        disable-zoom>
+                                    </model-viewer>
+                                </div>
+                            @elseif($extension == 'mp4')
+                                <div class="ratio ratio-16x9">
+                                    <video controls>
+                                        <source src="storage/{{ $file }}" type="video/mp4">
+                                        Tu navegador no soporta la etiqueta video.
+                                    </video>
+                                </div>
+                            @endif
+                            <div class="card-body">
+                                <p class="card-text">
+                                </p>
+                            </div>
                             <div class="card-footer">
                                 <form action="{{ route('files.destroy', str_replace('Files/','',$file)) }}" 
                                     class="d-inline float-end" 
