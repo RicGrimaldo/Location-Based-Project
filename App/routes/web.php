@@ -20,6 +20,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::get('/Files', 'App\Http\Controllers\ListFilesController@index')->name('files');
+Route::delete('/Files/{file}', 'App\Http\Controllers\ListFilesController@destroy')->name('files.destroy');
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function() {

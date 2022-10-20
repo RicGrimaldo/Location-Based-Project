@@ -9,12 +9,14 @@
                             <img src="storage/{{ $file }}" 
                             class="card-img-top w-100" 
                             alt="">
-                            <div class="card-body">
-                                <h5 class="card-title">Card title</h5>
-                                <p class="card-text">
-                                This is a longer card with supporting text below as a natural lead-in to
-                                additional content. This content is a little bit longer.
-                                </p>
+                            <div class="card-footer">
+                                <form action="{{ route('files.destroy', str_replace('Files/','',$file)) }}" 
+                                    class="d-inline float-end" 
+                                    method="POST">
+                                    @method('DELETE')
+                                    @csrf
+                                    <button type="submit" class="btn btn-danger">Eliminar</button>
+                                </form>
                             </div>
                         </div>
                     </div>
