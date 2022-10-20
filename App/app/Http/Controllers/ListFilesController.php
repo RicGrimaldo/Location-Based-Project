@@ -31,8 +31,7 @@ class ListFilesController extends Controller
     }
 
     public function destroy($file){
-        // dd($file);
         Storage::disk('public')->delete('Files/'. $file);
-        return redirect()->route('files');
+        return redirect()->route('files')->with('delete', 'ok');
     }
 }

@@ -12,7 +12,8 @@
                             <div class="card-footer">
                                 <form action="{{ route('files.destroy', str_replace('Files/','',$file)) }}" 
                                     class="d-inline float-end" 
-                                    method="POST">
+                                    method="POST"
+                                    id="form-delete">
                                     @method('DELETE')
                                     @csrf
                                     <button type="submit" class="btn btn-danger">Eliminar</button>
@@ -26,4 +27,41 @@
                 </div>
     </div>
 </div>
+@endsection
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if(session('delete') == 'ok')
+
+    <script>
+        Swal.fire(
+        '¡Eliminado!',
+        'El archivo ha sido eliminado con éxito.',
+        'success'
+        )
+    </script>
+
+    @endif
+
+    <script>
+        $('#form-delete').submit(function(e){
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro de eliminar el archivo?',
+                text: "Se eliminará  definitivamente.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            })
+        })
+    </script>
 @endsection
