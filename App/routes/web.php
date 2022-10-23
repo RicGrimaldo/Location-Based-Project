@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 //     return view('welcome');
 // });
 
+Route::get('/Welcome', 'App\Http\Controllers\UserController@index')->name('welcome');
+
 Auth::routes();
 
 Route::get('/Files', 'App\Http\Controllers\ListFilesController@index')->name('files');

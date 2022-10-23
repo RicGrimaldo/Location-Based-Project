@@ -61,6 +61,15 @@
                             </div>
                         </div>
                     </form>
+                    <div class="row mb-0">
+                        <div class="col-md-8 offset-md-2 d-grid gap-2">
+                            <a href="{{ route('welcome') }}">
+                                <button class="btn btn-secondary mt-3">
+                                    {{ __('Acceder como invitado') }}
+                                </button>
+                            </a>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
