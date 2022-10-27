@@ -1,7 +1,8 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\ListFilesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -21,11 +22,16 @@ Route::get('/Welcome', 'App\Http\Controllers\UserController@index')->name('welco
 
 Auth::routes();
 
-Route::get('/Files', 'App\Http\Controllers\ListFilesController@index')->name('files');
-Route::delete('/Files/{file}', 'App\Http\Controllers\ListFilesController@destroy')->name('files.destroy');
+Route::controller(ListFilesController::class)->prefix('Files')->group(function(){
+    Route::delete('/{file}', 'destroy')->name('files.destroy');
+    Route::get('/', 'index')->name('files');
+    Route::get('/create', 'create')->name('files.create');
+    Route::post('/', 'store')->name('files.store');
+    
+});
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function() {
-    Route::get('/changePassword',[App\Http\Controllers\HomeController::class, 'showChangePasswordGet'])->name('changePasswordGet');
-    Route::post('/changePassword',[App\Http\Controllers\HomeController::class, 'changePasswordPost'])->name('changePasswordPost');
+    Route::get('/changePassword',[HomeController::class, 'showChangePasswordGet'])->name('changePasswordGet');
+    Route::post('/changePassword',[HomeController::class, 'changePasswordPost'])->name('changePasswordPost');
 });
