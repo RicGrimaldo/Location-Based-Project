@@ -62,7 +62,7 @@
                         </div>
                     </form>
                     <div class="row mb-0">
-                        <div class="col-md-8 offset-md-2 d-grid gap-2">
+                        <div class="d-grid gap-2 col-6 mx-auto">
                             <a href="{{ route('welcome') }}">
                                 <button class="btn btn-secondary mt-3">
                                     {{ __('Acceder como invitado') }}

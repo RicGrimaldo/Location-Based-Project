@@ -20,7 +20,7 @@ class ListFilesController extends Controller
         $files = Storage::disk('public')->files('Files');
         $files = $this->paginate($files);
         $files->withPath('/Files');
-        return view('admin.files', compact('files'));
+        return view('admin.Files.files', compact('files'));
     }
 
     public function paginate($items, $perPage = 5, $page = null, $options = [])
