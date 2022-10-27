@@ -12,7 +12,7 @@
 }
 .contenedor-btn-file {
     display: inline-block;
-    position: relative;
+    text-align: center;
     background-color: #186CC3;
     color: #fff;
     border: 0;

@@ -6,7 +6,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
-use Illuminate\Support\Str;
+use Illuminate\Http\Request;
 
 class ListFilesController extends Controller
 {
@@ -30,8 +30,17 @@ class ListFilesController extends Controller
         return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
     }
 
+    public function create(){
+        return view('admin.Files.create');
+    }
+
     public function destroy($file){
         Storage::disk('public')->delete('Files/'. $file);
         return redirect()->route('files')->with('delete', 'ok');
     }
+
+    public function store(Request $request){
+        return $request->all();
+    }
+
 }
