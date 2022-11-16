@@ -83,6 +83,18 @@
 
     @endif
 
+    @if(session('upload') == 'ok')
+
+    <script>
+        Swal.fire(
+        '¡Guardado!',
+        'El archivo ha sido guardado con éxito.',
+        'success'
+        )
+    </script>
+
+    @endif
+
     <script>
         $('#form-delete').submit(function(e){
             e.preventDefault();

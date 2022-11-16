@@ -40,7 +40,8 @@ class ListFilesController extends Controller
     }
 
     public function store(Request $request){
-        return $request->all();
+        $request->file('file-upload')->store('public/Files');
+        return redirect()->route('files')->with('upload', 'ok');
     }
 
 }
