@@ -53,23 +53,24 @@
                             </div>
                         </div>
 
-                        <div class="row mb-0">
-                            <div class="col-md-8 offset-md-2 d-grid gap-2">
-                                <button type="submit" class="btn btn-primary">
-                                    {{ __('Iniciar sesión') }}
-                                </button>
-                            </div>
-                        </div>
+                        <button type="submit" class="btn btn-primary d-inline-block me-2 p-2">
+                            {{ __('Acceder como administrador') }}
+                        </button>
+                        <a href="{{ route('welcome') }}">
+                        <button type="button" class="btn btn-secondary d-inline-block p-2">
+                            {{ __('Acceder como invitado') }}
+                        </button>
+                        </a>
                     </form>
-                    <div class="row mb-0">
+                    <!-- <div class="row mb-0">
                         <div class="d-grid gap-2 col-6 mx-auto">
                             <a href="{{ route('welcome') }}">
-                                <button class="btn btn-secondary mt-3">
+                                <button type="button" class="btn btn-secondary mt-3">
                                     {{ __('Acceder como invitado') }}
                                 </button>
                             </a>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>
