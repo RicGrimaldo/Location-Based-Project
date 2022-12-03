@@ -53,4 +53,19 @@
     color: #fff;
 }
 
+#location{
+    float: right;
+    top: 7px;
+    width: auto;
+    height: auto;
+    background-color: rgba(0, 0, 0, 0.171);
+    border-radius: 15px 0 0 15px;
+    padding: 5px;
+}
+
+#location p{
+    display: block;
+    font-size: 16px;
+    color: white;
+}
 a-scene{ z-index: -1;}

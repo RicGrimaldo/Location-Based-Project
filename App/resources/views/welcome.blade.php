@@ -26,18 +26,18 @@
     </head>
     <body class="antialiased">
     
-    <nav class="navbar bg-transparent">
+    <nav class="navbar navbar-expand-lg bg-transparent">
         <div class="container">
-            <a class="nav-link navbar-brand" href="{{ route('login') }}">
-                <img src="/assets/arrows_left_icon_193540.png" alt="Bootstrap" width="60" height="48">
+            <a class="nav-link navbar-brand" href="{{ route('login') }}" >
+                <img src="/assets/house.svg" alt="Bootstrap" width="50" height="38">
             </a>
+            <div id="location">
+                <p id="latitude"></p>
+                <p id="longitude"></p>
+            </div>
         </div>
     </nav>
 
-    <div id="location">
-        <p id="latitude"></p>
-        <p id="longitude"></p>
-    </div>
 
     <a-scene
         vr-mode-ui="enabled: false"
@@ -50,6 +50,6 @@
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="Js/Navbar.js"></script>
-    <script src="Js/ViewMethods.js"></script>
+    <script src="/js/viewMethods.js"></script>
     </body>
 </html>
