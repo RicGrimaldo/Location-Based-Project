@@ -49,7 +49,6 @@
     </a-scene>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="Js/Navbar.js"></script>
     <script src="/js/viewMethods.js"></script>
     </body>
 </html>

@@ -56,7 +56,7 @@
                         <button type="submit" class="btn btn-primary d-inline-block me-2 p-2">
                             {{ __('Acceder como administrador') }}
                         </button>
-                        <a href="{{ route('welcome') }}">
+                        <a href="{{ route('welcome') }}" class="mt-6">
                         <button type="button" class="btn btn-secondary d-inline-block p-2">
                             {{ __('Acceder como invitado') }}
                         </button>
