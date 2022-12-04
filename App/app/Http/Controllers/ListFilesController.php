@@ -7,6 +7,7 @@ use Illuminate\Support\Collection;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ListFilesController extends Controller
 {
@@ -40,7 +41,16 @@ class ListFilesController extends Controller
     }
 
     public function store(Request $request){
-        $request->file('file-upload')->store('public/Files');
+        $org_file_name = $request->file('file-upload')->getClientOriginalName();
+        $extension = pathinfo($org_file_name, PATHINFO_EXTENSION);
+        $objExtensions = array('gltf','glb');
+        if(in_array($extension, $objExtensions)){
+            $new_name = (string) Str::uuid() . '.' . pathinfo($org_file_name, PATHINFO_EXTENSION);
+            $request->file('file-upload')->storeAs('public/Files', $new_name);
+        }
+        else{ 
+            $request->file('file-upload')->store('public/Files');
+        }
         return redirect()->route('files')->with('upload', 'ok');
     }
 
