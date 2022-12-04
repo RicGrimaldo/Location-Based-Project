@@ -53,7 +53,7 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary d-inline-block me-2 p-2">
+                        <button type="submit" class="btn btn-primary d-inline-block mb-3 p-2">
                             {{ __('Acceder como administrador') }}
                         </button>
                         <a href="{{ route('welcome') }}" class="mt-6">
