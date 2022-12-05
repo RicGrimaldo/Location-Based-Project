@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ListFilesController;
+use App\Http\Controllers\UbicationsController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -28,6 +29,13 @@ Route::controller(ListFilesController::class)->prefix('Files')->group(function()
     Route::get('/create', 'create')->name('files.create');
     Route::post('/', 'store')->name('files.store');
     
+});
+
+Route::controller(UbicationsController::class)->prefix('Ubications')->group(function () {
+    Route::post('/{ubication}', 'destroy')->name('files.destroy');
+    Route::get('/', 'index')->name('files');
+    Route::post('/create', 'create')->name('ubications.create');
+    Route::post('/', 'store')->name('ubications.store');
 });
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
