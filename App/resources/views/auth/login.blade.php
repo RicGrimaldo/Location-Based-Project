@@ -53,11 +53,11 @@
                             </div>
                         </div>
 
-                        <button type="submit" class="btn btn-primary d-inline-block mb-3 p-2">
+                        <button type="submit" class="btn btn-primary d-inline-block mb-3 p-2 w-100">
                             {{ __('Acceder como administrador') }}
                         </button>
                         <a href="{{ route('welcome') }}" class="mt-6">
-                        <button type="button" class="btn btn-secondary d-inline-block p-2">
+                        <button type="button" class="btn btn-secondary d-inline-block p-2 w-100">
                             {{ __('Acceder como invitado') }}
                         </button>
                         </a>

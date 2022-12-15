@@ -19,6 +19,7 @@ class UbicationsController extends Controller
     }
 
     public function store(){
+        //
         return redirect()->route('ubications')->with('upload', 'ok');
     }
 }
