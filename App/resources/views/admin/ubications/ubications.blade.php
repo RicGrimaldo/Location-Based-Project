@@ -11,6 +11,7 @@
         <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
         <script src="https://unpkg.com/aframe-look-at-component@0.8.0/dist/aframe-look-at-component.min.js"></script>
         <script src="https://raw.githack.com/AR-js-org/AR.js/master/aframe/build/aframe-ar-nft.js"></script>
+        <script type="module" src="https://unpkg.com/@google/model-viewer/dist/model-viewer.min.js"></script>
 
         <!-- Styles -->
         <style>
@@ -163,14 +164,60 @@
     </div>
 
     <div id="fileListModal" class="modal fade" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable modal-xl">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Lista de archivos</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
                 <div class="modal-body" id="file_list">
-                    <!--Files List display-->
+                    <div class="row">
+                        @foreach($files as $file)
+                            <div class="card-group">
+                                <div class="card h-100">
+                                    @php
+                                        $extension = pathinfo($file, PATHINFO_EXTENSION);
+                                        $imgExtensions = array('jpg', 'jpeg', 'png', 'gif');
+                                        $objExtensions = array('gltf','glb');
+                                        $fl_type = '';
+                                    @endphp
+                                    @if(in_array($extension, $imgExtensions))
+                                        @php($fl_type = 'img')
+                                        <img src="storage/{{ $file }}" 
+                                        class="card-img-top w-100" 
+                                        alt="">
+                                    @elseif(in_array($extension, $objExtensions))
+                                        @php($fl_type = '3DObj')
+                                        <div id="div3D">
+                                            <model-viewer 
+                                                src="storage/{{ $file }}"
+                                                camera-controls 
+                                                auto-rotate 
+                                                disable-zoom>
+                                            </model-viewer>
+                                        </div>
+                                    @elseif($extension == 'mp4')
+                                        @php($fl_type = 'video')
+                                        <div class="ratio ratio-16x9">
+                                            <video controls>
+                                                <source src="storage/{{ $file }}" type="video/mp4">
+                                                Tu navegador no soporta la etiqueta video.
+                                            </video>
+                                        </div>
+                                    @endif
+                                    <div class="card-body text-end">
+                                        <button 
+                                            name="select_file" 
+                                            type="button" 
+                                            class="select_file btn btn-primary" 
+                                            id="storage/{{ $file }}"
+                                            value="{{ $fl_type }}">
+                                        Seleccionar</button>
+                                    </div>
+                                </div>
+                            </div>
+                        @endforeach
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>

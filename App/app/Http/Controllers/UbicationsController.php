@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UbicationsController extends Controller
 {
@@ -14,7 +14,18 @@ class UbicationsController extends Controller
 
     public function index()
     {
-        return view('admin.ubications.ubications');
+        $files = Storage::disk('public')->files('Files');
+        return view('admin.ubications.ubications', compact('files'));
+    }
+
+    public function getFiles()
+    {
+        $files = Storage::disk('public')->files('Files');
+        $files = $this->paginate($files);
+        $files->withPath('/Files');
+        return response()->json([
+            compact('files')
+        ]);
     }
 
     public function create(){

@@ -255,20 +255,21 @@ function paintModal(fileName, file_type, path){
 
 //  To display the list of the server files.
 document.getElementById('btnViewFiles').addEventListener('click',function(){
-    var folder_name = '../Files';
-    var action = 'fetch_files';
-    $.ajax({
-        url:"./PHP/ServerMethods.php",
-        method:"POST",
-        data:{
-            action: action,
-            folder_name: folder_name
-        },
-        success:function(data){
-            $("#file_list").html(data);
-            $("#fileListModal").modal("show");
-        }
-    })
+    // var folder_name = '../Files';
+    // var action = 'fetch_files';
+    // $.ajax({
+    //     url:"./PHP/ServerMethods.php",
+    //     method:"POST",
+    //     data:{
+    //         action: action,
+    //         folder_name: folder_name
+    //     },
+    //     success:function(data){
+    //         $("#file_list").html(data);
+    //         $("#fileListModal").modal("show");
+    //     }
+    // })
+    $("#fileListModal").modal("show");
 })
 
 //  In the case that a server file is selected
