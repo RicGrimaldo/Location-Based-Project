@@ -31,14 +31,13 @@ Route::controller(ListFilesController::class)->prefix('Files')->group(function()
     
 });
 
+Route::get('/', [UbicationsController::class, 'index'])->name('ubications');
 Route::controller(UbicationsController::class)->prefix('Ubications')->group(function () {
-    Route::post('/{ubication}', 'destroy')->name('files.destroy');
-    Route::get('/', 'index')->name('files');
+    Route::post('/{ubication}', 'destroy')->name('ubications.destroy');
     Route::post('/create', 'create')->name('ubications.create');
     Route::post('/', 'store')->name('ubications.store');
 });
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::group(['middleware' => 'auth'], function() {
     Route::get('/changePassword',[HomeController::class, 'showChangePasswordGet'])->name('changePasswordGet');
     Route::post('/changePassword',[HomeController::class, 'changePasswordPost'])->name('changePasswordPost');

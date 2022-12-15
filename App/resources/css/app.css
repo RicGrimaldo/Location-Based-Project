@@ -68,4 +68,37 @@
     font-size: 16px;
     color: white;
 }
+
+.limitChr{
+    width: 100%;
+    text-align: right;
+    margin-top: 15px;
+    color: #737373;
+}
+
+#txtAreaDiv, #limitChartxt{ display: none;}
+
 a-scene{ z-index: -1;}
+
+.buttonPlus {
+    position: absolute;
+    border: none;
+    right: 15px;
+    bottom: 7px;
+    width: 40px;
+    height: 40px;
+    height: 5em;
+    display: flex;
+    justify-content:flex-end;
+    align-items: center;
+    z-index: 1;
+}
+
+p#o{
+    display: flex;
+    flex-direction: column;
+    justify-content:center;
+    align-items: center;
+    text-align: center;
+    margin: 10px;
+}
