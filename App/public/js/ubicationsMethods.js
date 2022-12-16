@@ -126,6 +126,12 @@ btnSaveFile.addEventListener('click', function(){
         //  In the case where the text was selected
         if($("#txtAreaDiv").css("display") === 'block'){
             text = $("#txtArea").val();
+            //  TextArea empty validation
+            if(text.length == 0){
+                showAlert("Debe poner un texto", "error");
+                $("#txtAreaDiv").focus();
+                return;
+            }
             file_name = randomName();
             file_type = 'txt';
         }else{
@@ -255,20 +261,6 @@ function paintModal(fileName, file_type, path){
 
 //  To display the list of the server files.
 document.getElementById('btnViewFiles').addEventListener('click',function(){
-    // var folder_name = '../Files';
-    // var action = 'fetch_files';
-    // $.ajax({
-    //     url:"./PHP/ServerMethods.php",
-    //     method:"POST",
-    //     data:{
-    //         action: action,
-    //         folder_name: folder_name
-    //     },
-    //     success:function(data){
-    //         $("#file_list").html(data);
-    //         $("#fileListModal").modal("show");
-    //     }
-    // })
     $("#fileListModal").modal("show");
 })
 
