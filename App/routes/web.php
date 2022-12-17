@@ -33,9 +33,7 @@ Route::controller(ListFilesController::class)->prefix('Files')->group(function()
 
 Route::get('/', [UbicationsController::class, 'index'])->name('ubications');
 Route::controller(UbicationsController::class)->prefix('Ubications')->group(function () {
-    Route::get('/getFiles', 'getFiles')->name('ubications.getFiles');
     Route::post('/{ubication}', 'destroy')->name('ubications.destroy');
-    Route::post('/create', 'create')->name('ubications.create');
     Route::post('/', 'store')->name('ubications.store');
 });
 

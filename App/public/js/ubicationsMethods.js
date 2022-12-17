@@ -46,70 +46,70 @@ $("input[name=file]").change(function () {
 });
 
 //Upload File function
-btnUploadFile.addEventListener('click', function(){
-    //  In the case that the text option is selected, the process will be different of the file process
-    if(($('input:radio[name=file]:checked').val()) === 'txt'){
-        btnUploadFile.setAttribute('disabled','');
-        btnUploadFile.innerHTML = 
-            ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-            <span>Cargando...</span>`;
-        setTimeout( function() {
-            $('#modal').modal('hide'); 
-            $('#secondModal').modal('show'); 
-            btnUploadFile.removeAttribute('disabled');
-            btnUploadFile.innerHTML = '';
-            btnUploadFile.innerText = 'Subir archivo';
-        }, 1500 );
-        //  It won't have a name, it's a text after all
-        paintModal(null, 'txt', null);
-        return;
-    }
-    //  File validation will be done first (file size and extension file)
-    if(fileValidation()){
-        var filename = randomName();   
-        var file_data = $('#formFile').prop('files')[0];    
-        let file_type = document.querySelector('input[name=file]:checked').value;
-        var form_data = new FormData();
-        form_data.append("file",file_data);
-        form_data.append("filename",filename);
-        form_data.append("action","upload_file");
-        //  By ajax, the request will be processed via PHP
-        $.ajax({
-            url: "./PHP/ServerMethods.php",                      
-                    type: "POST",
-                    dataType: 'script',
-                    cache: false,
-                    contentType: false,
-                    processData: false,
-                    data: form_data,
-            success:function(dat2){
-                if(dat2 != "\"error\""){
-                    //  In the success situation, the second modal will be shown and the file will be saved.
-                    btnUploadFile.setAttribute('disabled','');
-                    btnUploadFile.innerHTML = 
-                        ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                        <span>Cargando...</span>`;
-                    setTimeout( function() {
-                        Swal.fire({
-                            position: 'top-end',
-                            icon: 'success',
-                            title: 'Archivo subido correctamente',
-                            showConfirmButton: false,
-                            timer: 1500
-                        })
-                        $('#modal').modal('hide'); 
-                        $('#secondModal').modal('show'); 
-                        btnUploadFile.removeAttribute('disabled');
-                        btnUploadFile.innerHTML = '';
-                        btnUploadFile.innerText = 'Subir archivo';
-                    }, 1500 );
-                    paintModal(dat2, file_type, null);
-                }
-                else console.log("Hubo un error");
-            }
-        });
-    }
-});
+// btnUploadFile.addEventListener('click', function(){
+//     //  In the case that the text option is selected, the process will be different of the file process
+//     if(($('input:radio[name=file]:checked').val()) === 'txt'){
+//         btnUploadFile.setAttribute('disabled','');
+//         btnUploadFile.innerHTML = 
+//             ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+//             <span>Cargando...</span>`;
+//         setTimeout( function() {
+//             $('#modal').modal('hide'); 
+//             $('#secondModal').modal('show'); 
+//             btnUploadFile.removeAttribute('disabled');
+//             btnUploadFile.innerHTML = '';
+//             btnUploadFile.innerText = 'Subir archivo';
+//         }, 1500 );
+//         //  It won't have a name, it's a text after all
+//         paintModal(null, 'txt', null);
+//         return;
+//     }
+//     //  File validation will be done first (file size and extension file)
+//     if(fileValidation()){
+//         var filename = randomName();   
+//         var file_data = $('#formFile').prop('files')[0];    
+//         let file_type = document.querySelector('input[name=file]:checked').value;
+//         var form_data = new FormData();
+//         form_data.append("file",file_data);
+//         form_data.append("filename",filename);
+//         form_data.append("action","upload_file");
+//         //  By ajax, the request will be processed via PHP
+//         $.ajax({
+//             url: "./PHP/ServerMethods.php",                      
+//                     type: "POST",
+//                     dataType: 'script',
+//                     cache: false,
+//                     contentType: false,
+//                     processData: false,
+//                     data: form_data,
+//             success:function(dat2){
+//                 if(dat2 != "\"error\""){
+//                     //  In the success situation, the second modal will be shown and the file will be saved.
+//                     btnUploadFile.setAttribute('disabled','');
+//                     btnUploadFile.innerHTML = 
+//                         ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+//                         <span>Cargando...</span>`;
+//                     setTimeout( function() {
+//                         Swal.fire({
+//                             position: 'top-end',
+//                             icon: 'success',
+//                             title: 'Archivo subido correctamente',
+//                             showConfirmButton: false,
+//                             timer: 1500
+//                         })
+//                         $('#modal').modal('hide'); 
+//                         $('#secondModal').modal('show'); 
+//                         btnUploadFile.removeAttribute('disabled');
+//                         btnUploadFile.innerHTML = '';
+//                         btnUploadFile.innerText = 'Subir archivo';
+//                     }, 1500 );
+//                     paintModal(dat2, file_type, null);
+//                 }
+//                 else console.log("Hubo un error");
+//             }
+//         });
+//     }
+// });
 
 //  Before saving the file, the empty input validation occurs
 btnSaveFile.addEventListener('click', function(){

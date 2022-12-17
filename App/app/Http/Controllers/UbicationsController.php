@@ -18,26 +18,13 @@ class UbicationsController extends Controller
         return view('admin.ubications.ubications', compact('files'));
     }
 
-    public function getFiles()
-    {
-        $files = Storage::disk('public')->files('Files');
-        $files = $this->paginate($files);
-        $files->withPath('/Files');
-        return response()->json([
-            compact('files')
-        ]);
-    }
-
-    public function create(){
-
-    }
-
     public function destroy(){
-
+        
     }
-
+    
     public function store(){
         //
+        dd(request()->all());
         return redirect()->route('ubications')->with('upload', 'ok');
     }
 }
