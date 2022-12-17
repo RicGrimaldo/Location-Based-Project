@@ -63,7 +63,7 @@ btnUploadFile.addEventListener('click', function(){
             btnUploadFile.innerText = 'Subir archivo';
         }, 1500 );
         //  It won't have a name, it's a text after all
-        paintModal(null, 'txt', null);
+        paintModalPreview(null, null, 'txt');
         return;
     }
     //  File validation will be done first (file size and extension file)
