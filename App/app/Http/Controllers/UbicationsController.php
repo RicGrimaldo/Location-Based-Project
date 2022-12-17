@@ -23,8 +23,8 @@ class UbicationsController extends Controller
     }
     
     public function store(){
-        //
-        dd(request()->all());
+        $data = request();
+        
         return redirect()->route('ubications')->with('upload', 'ok');
     }
 }

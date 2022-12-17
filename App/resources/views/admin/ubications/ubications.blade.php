@@ -86,8 +86,7 @@
                     <h5 class="modal-title" id="ModalLabel">Selecciona el tipo de archivo: </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <form action="{{ route('ubications.store') }}" enctype="multipart/form-data" method="post">
-                @csrf
+                <form>
                     <div class="modal-body">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="file" id="3DObject" checked value="3DObj">
@@ -127,7 +126,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnClose">Cerrar</button>
-                        <button type="submit" class="btn btn-primary" id="btnUploadFile">Subir archivo</button>
+                        <button type="button" class="btn btn-primary" id="btnUploadFile">Subir archivo</button>
                     </div>
                 </form>
             </div>
@@ -157,7 +156,7 @@
                     <p id="limitChartxt" class="limitChr">0/200</p>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnClose2">Cancelar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancel">Cancelar</button>
                     <button type="button" class="btn btn-primary" id="btnSaveFile">Guardar</button>
                 </div>
             </div>
