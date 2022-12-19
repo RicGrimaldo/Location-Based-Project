@@ -93,41 +93,6 @@ btnUploadFile.addEventListener('click', function(){
             btnUploadFile.innerText = 'Subir archivo';
         }, 1500 );
         paintModalPreview(file_data, filename, file_type);
-        // //  By ajax, the request will be processed via PHP
-        // $.ajax({
-        //     url: "./PHP/ServerMethods.php",                      
-        //             type: "POST",
-        //             dataType: 'script',
-        //             cache: false,
-        //             contentType: false,
-        //             processData: false,
-        //             data: form_data,
-        //     success:function(dat2){
-        //         if(dat2 != "\"error\""){
-        //             //  In the success situation, the second modal will be shown and the file will be saved.
-        //             btnUploadFile.setAttribute('disabled','');
-        //             btnUploadFile.innerHTML = 
-        //                 ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        //                 <span>Cargando...</span>`;
-        //             setTimeout( function() {
-        //                 Swal.fire({
-        //                     position: 'top-end',
-        //                     icon: 'success',
-        //                     title: 'Archivo subido correctamente',
-        //                     showConfirmButton: false,
-        //                     timer: 1500
-        //                 })
-        //                 $('#modal').modal('hide'); 
-        //                 $('#secondModal').modal('show'); 
-        //                 btnUploadFile.removeAttribute('disabled');
-        //                 btnUploadFile.innerHTML = '';
-        //                 btnUploadFile.innerText = 'Subir archivo';
-        //             }, 1500 );
-        //             paintModal(dat2, file_type, null);
-        //         }
-        //         else console.log("Hubo un error");
-        //     }
-        // });
     }
 });
 
@@ -232,13 +197,42 @@ const fileValidation = function(){
     return true;
 }
 
+//  In the case that a server file is selected
+$(document).on('click', '.select_file', function(){
+    var selectedFilePath = $(this).attr("id");
+    var file_type = $(this).attr("value");
+    flagSelected = true;
+    $('#fileListModal').modal('hide'); 
+    btnUploadFile.setAttribute('disabled','');
+    showAlert("Archivo seleccionado", "success");
+    btnUploadFile.innerHTML = 
+        ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+        <span>Cargando...</span>`;
+    setTimeout( function() {
+        $('#modal').modal('hide'); 
+        $('#secondModal').modal('show'); 
+        btnUploadFile.removeAttribute('disabled');
+        btnUploadFile.innerHTML = '';
+        btnUploadFile.innerText = 'Subir archivo';
+    }, 1500 );
+    // paintModal('"'+randomName()+'"',file_type, path);
+    paintModalPreview(selectedFilePath, '"'+randomName()+'"', file_type);
+});
+
 function paintModalPreview(file_data, filename, file_type){
+    var fileCodified;
     if(file_type != 'txt'){ 
-        if(flagSelected)
+        //  In the case that a server's file was selected and already exists a path for the file
+        if(flagSelected){
             flagSelected = false;
+            fileCodified = file_data;
+        }
+        //  In the case to show a preview of the file that will be uploaded
+        else{
+            var fileCodified = URL.createObjectURL(file_data);
+        }
         $('#txtAreaDiv').css("display","none");
         $('#limitChartxt').css("display","none");
-        var fileCodified = URL.createObjectURL(file_data);
     }
     else {
         $('#selectedTag').remove();
@@ -278,78 +272,58 @@ btnCancel.addEventListener('click', function(){
     document.getElementById('formFile').value = '';
 });
 
-//  Depending of the file type, the second modal will show it.
-function paintModal(fileName, file_type, path){
-    let route_file = '';
-    let tmp_file;
-    //  The modal will be different in the case that a text will be shown
-    if(file_type != 'txt'){ 
-        if(flagSelected){
-            flagSelected = false;
-            route_file = path;
-        } else{ 
-            route_file = './Files/' + JSON.parse(fileName);
-        }
-        console.log(route_file);
-        tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
-        localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
-        $('#txtAreaDiv').css("display","none");
-        $('#limitChartxt').css("display","none");
-    } else {
-        $('#selectedTag').remove();
-        $('#sourceFile').remove();
-        $('#tagLabel').text("Etiqueta para el texto: ");
-        $('#txtAreaDiv').css("display","block");
-        $('#limitChartxt').css("display","block");
-    }
-    let file = '';
-    switch(file_type){
-        case '3DObj':
-            file = `<div id="div3D">
-                        <model-viewer src="${route_file}" camera-controls auto-rotate disable-zoom></model-viewer>
-                    </div>`;
-            break;
-        case 'img':
-            file = `<img src="${route_file}" class="rounded mx-auto d-block" alt="Saved image" id="savedImg" width="150px">`;
-            break;
-        case 'video':
-            file = `<div class="ratio ratio-16x9">
-                        <video controls>
-                        <source src="${route_file}" type="video/mp4">
-                        Tu navegador no soporta la etiqueta video.
-                        </video>
-                    </div>`
-            break;
-    }
-    //  The new file tag will be shown in the modal
-    document.getElementById('sourceFile').innerHTML = file;
-}
+// //  Depending of the file type, the second modal will show it.
+// function paintModal(fileName, file_type, path){
+//     let route_file = '';
+//     let tmp_file;
+//     //  The modal will be different in the case that a text will be shown
+//     if(file_type != 'txt'){ 
+//         if(flagSelected){
+//             flagSelected = false;
+//             route_file = path;
+//         } else{ 
+//             route_file = './Files/' + JSON.parse(fileName);
+//         }
+//         console.log(route_file);
+//         tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
+//         localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
+//         $('#txtAreaDiv').css("display","none");
+//         $('#limitChartxt').css("display","none");
+//     } else {
+//         $('#selectedTag').remove();
+//         $('#sourceFile').remove();
+//         $('#tagLabel').text("Etiqueta para el texto: ");
+//         $('#txtAreaDiv').css("display","block");
+//         $('#limitChartxt').css("display","block");
+//     }
+//     let file = '';
+//     switch(file_type){
+//         case '3DObj':
+//             file = `<div id="div3D">
+//                         <model-viewer src="${route_file}" camera-controls auto-rotate disable-zoom></model-viewer>
+//                     </div>`;
+//             break;
+//         case 'img':
+//             file = `<img src="${route_file}" class="rounded mx-auto d-block" alt="Saved image" id="savedImg" width="150px">`;
+//             break;
+//         case 'video':
+//             file = `<div class="ratio ratio-16x9">
+//                         <video controls>
+//                         <source src="${route_file}" type="video/mp4">
+//                         Tu navegador no soporta la etiqueta video.
+//                         </video>
+//                     </div>`
+//             break;
+//     }
+//     //  The new file tag will be shown in the modal
+//     document.getElementById('sourceFile').innerHTML = file;
+// }
 
 //  To display the list of the server files.
 document.getElementById('btnViewFiles').addEventListener('click',function(){
     $("#fileListModal").modal("show");
-})
+});
 
-//  In the case that a server file is selected
-$(document).on('click', '.select_file', function(){
-    var path = $(this).attr("id");
-    var file_type = $(this).attr("value");
-    flagSelected = true;
-    $('#fileListModal').modal('hide'); 
-    btnUploadFile.setAttribute('disabled','');
-    showAlert("Archivo seleccionado", "success");
-    btnUploadFile.innerHTML = 
-        ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        <span>Cargando...</span>`;
-    setTimeout( function() {
-        $('#modal').modal('hide'); 
-        $('#secondModal').modal('show'); 
-        btnUploadFile.removeAttribute('disabled');
-        btnUploadFile.innerHTML = '';
-        btnUploadFile.innerText = 'Subir archivo';
-    }, 1500 );
-    paintModal('"'+randomName()+'"',file_type, path);
-})
 
 //  Limit Character for the ubication tag
 UbicationTag.addEventListener('input', function(){
