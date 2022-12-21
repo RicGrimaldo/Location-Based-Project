@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>Laravel</title>
 
@@ -141,24 +142,27 @@
                     <h5 class="modal-title" id="staticBackdropLabel">Guardar ubicación</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btnClose2Modal"></button>
                 </div>
-                <div class="modal-body">
-                    <div class="form-floating mb-3">
-                        <input type="email" class="form-control" id="UbicationTag" placeholder="name@example.com">
-                        <label for="UbicationTag" id="tagLabel">Etiqueta para el archivo: </label>
-                        <p id="limitCharTag" class="limitChr"></p>
+                <form enctype="multipart/form-data" method="post" id="StoreFormData" action="{{ route('ubications.store') }}">
+                    @csrf
+                    <div class="modal-body">
+                        <div class="form-floating mb-3">
+                            <input name="tag" type="text" class="form-control" id="UbicationTag">
+                            <label for="UbicationTag" id="tagLabel">Etiqueta para el archivo: </label>
+                            <p id="limitCharTag" class="limitChr"></p>
+                        </div>
+                        <p id="selectedTag">Archivo seleccionado: </p>
+                        <div id="sourceFile"></div>
+                        <div class="mb-3" id="txtAreaDiv">
+                            <label for="txtArea" class="form-label">Ingrese el texto: </label>
+                            <textarea name="textArea" class="form-control" id="txtArea" rows="8"></textarea>
+                        </div>
+                        <p id="limitChartxt" class="limitChr">0/200</p>
                     </div>
-                    <p id="selectedTag">Archivo seleccionado: </p>
-                    <div id="sourceFile"></div>
-                    <div class="mb-3" id="txtAreaDiv">
-                        <label for="txtArea" class="form-label">Ingrese el texto: </label>
-                        <textarea class="form-control" id="txtArea" rows="8"></textarea>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancel">Cancelar</button>
+                        <button type="submit" class="btn btn-primary" id="btnSaveFile">Guardar</button>
                     </div>
-                    <p id="limitChartxt" class="limitChr">0/200</p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancel">Cancelar</button>
-                    <button type="button" class="btn btn-primary" id="btnSaveFile">Guardar</button>
-                </div>
+                </form>
             </div>
         </div>
     </div>

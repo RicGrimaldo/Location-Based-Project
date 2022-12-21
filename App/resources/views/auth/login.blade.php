@@ -62,15 +62,6 @@
                         </button>
                         </a>
                     </form>
-                    <!-- <div class="row mb-0">
-                        <div class="d-grid gap-2 col-6 mx-auto">
-                            <a href="{{ route('welcome') }}">
-                                <button type="button" class="btn btn-secondary mt-3">
-                                    {{ __('Acceder como invitado') }}
-                                </button>
-                            </a>
-                        </div>
-                    </div> -->
                 </div>
             </div>
         </div>

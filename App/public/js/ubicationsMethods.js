@@ -74,6 +74,10 @@ btnUploadFile.addEventListener('click', function(){
         form_data.append("file",file_data);
         form_data.append("filename",filename);
         form_data.append("file_type",file_type);
+        // Se listan los pares clave/valor
+        for (var entrie of form_data.entries()) {
+            console.log(entrie[0]+ ': ' + entrie[1]); 
+        }
         btnUploadFile.setAttribute('disabled','');
         btnUploadFile.innerHTML = 
             ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -120,24 +124,48 @@ btnSaveFile.addEventListener('click', function(){
             file_name = randomName();
             file_type = 'txt';
         }else{
-            let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
-            localStorage.removeItem('ActualFile');
-            file_name = tmp_file.file_Name;
-            file_type = tmp_file.file_type;
-            route_file = tmp_file.route_file;
+            // let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
+            // localStorage.removeItem('ActualFile');
+            // file_name = tmp_file.file_Name;
+            // file_type = tmp_file.file_type;
+            // route_file = tmp_file.route_file;
         }
         //  The new file and location are uploaded
         // In the case of the text, the object only will have the ubication,
         // the tag, the file type and the text itself
-        tmp_ubication = new Ubication(file_name, tag, file_type, 
-                                    latitude, longitude, route_file, text);
-        console.log(tmp_ubication);
+        // tmp_ubication = new Ubication(file_name, tag, file_type, 
+        //                             latitude, longitude, route_file, text);
+        form_data.append("tag", tag);
+        form_data.append("latitude", latitude);
+        form_data.append("longitude", longitude);
+        form_data.append("text", text);
+        for (var entrie of form_data.entries()) {
+            console.log(entrie[0]+ ': ' + entrie[1]); 
+        }
+        $.ajax({
+                headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+                url: "./Ubications/",                      
+                type: "POST",
+                dataType: 'script',
+                cache: false,
+                contentType: false,
+                processData: false,
+                data: {
+                    "latitude": latitude,
+                    "longitude": longitude
+                },
+                success: function(response){ 
+                            console.log(JSON.stringify(response));
+                },
+                error: function(jqXHR, textStatus, errorThrown) { 
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                }
+        })
         //  The new location is saved
-        ubications.push(tmp_ubication);
-        localStorage.setItem('ubications',JSON.stringify(ubications));
-        $('#secondModal').modal('hide'); 
-        showAlert('Datos guardados correctamente', 'success');
-        setTimeout( function() { window.location.href = "view.html"; }, 2500 );
+        // ubications.push(tmp_ubication);
+        // localStorage.setItem('ubications',JSON.stringify(ubications));
+        // $('#secondModal').modal('hide'); 
+        // showAlert('Datos guardados correctamente', 'success');
     }
     else{
         showAlert("Debe ingresar una etiqueta", "error");
@@ -226,6 +254,7 @@ function paintModalPreview(file_data, filename, file_type){
         if(flagSelected){
             flagSelected = false;
             fileCodified = file_data;
+            form_data.append("selectedFilePath", file_data);
         }
         //  In the case to show a preview of the file that will be uploaded
         else{
@@ -272,58 +301,10 @@ btnCancel.addEventListener('click', function(){
     document.getElementById('formFile').value = '';
 });
 
-// //  Depending of the file type, the second modal will show it.
-// function paintModal(fileName, file_type, path){
-//     let route_file = '';
-//     let tmp_file;
-//     //  The modal will be different in the case that a text will be shown
-//     if(file_type != 'txt'){ 
-//         if(flagSelected){
-//             flagSelected = false;
-//             route_file = path;
-//         } else{ 
-//             route_file = './Files/' + JSON.parse(fileName);
-//         }
-//         console.log(route_file);
-//         tmp_file = new TmpFile(JSON.parse(fileName), file_type, route_file);
-//         localStorage.setItem('ActualFile', JSON.stringify(tmp_file));
-//         $('#txtAreaDiv').css("display","none");
-//         $('#limitChartxt').css("display","none");
-//     } else {
-//         $('#selectedTag').remove();
-//         $('#sourceFile').remove();
-//         $('#tagLabel').text("Etiqueta para el texto: ");
-//         $('#txtAreaDiv').css("display","block");
-//         $('#limitChartxt').css("display","block");
-//     }
-//     let file = '';
-//     switch(file_type){
-//         case '3DObj':
-//             file = `<div id="div3D">
-//                         <model-viewer src="${route_file}" camera-controls auto-rotate disable-zoom></model-viewer>
-//                     </div>`;
-//             break;
-//         case 'img':
-//             file = `<img src="${route_file}" class="rounded mx-auto d-block" alt="Saved image" id="savedImg" width="150px">`;
-//             break;
-//         case 'video':
-//             file = `<div class="ratio ratio-16x9">
-//                         <video controls>
-//                         <source src="${route_file}" type="video/mp4">
-//                         Tu navegador no soporta la etiqueta video.
-//                         </video>
-//                     </div>`
-//             break;
-//     }
-//     //  The new file tag will be shown in the modal
-//     document.getElementById('sourceFile').innerHTML = file;
-// }
-
 //  To display the list of the server files.
 document.getElementById('btnViewFiles').addEventListener('click',function(){
     $("#fileListModal").modal("show");
 });
-
 
 //  Limit Character for the ubication tag
 UbicationTag.addEventListener('input', function(){

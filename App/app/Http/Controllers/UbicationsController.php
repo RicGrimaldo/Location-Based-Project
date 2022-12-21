@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class UbicationsController extends Controller
 {
@@ -22,9 +24,8 @@ class UbicationsController extends Controller
         
     }
     
-    public function store(){
-        $data = request();
-        
-        return redirect()->route('ubications')->with('upload', 'ok');
+    public function store(Request $request){
+        dd($request->all());
+        return Response::json($request->all(), 200);
     }
 }
