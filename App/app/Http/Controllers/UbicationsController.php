@@ -25,7 +25,13 @@ class UbicationsController extends Controller
     }
     
     public function store(Request $request){
-        dd($request->all());
-        return Response::json($request->all(), 200);
+        return response()->json([
+            'filename' => $request->filename,
+            'file_type' => $request->file_type,
+            'tag' => $request->tag,
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'text' => $request->text,
+        ]);
     }
 }

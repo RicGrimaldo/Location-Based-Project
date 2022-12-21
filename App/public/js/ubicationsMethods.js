@@ -144,21 +144,19 @@ btnSaveFile.addEventListener('click', function(){
         }
         $.ajax({
                 headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-                url: "./Ubications/",                      
+                url: "/Ubications/",                      
                 type: "POST",
                 dataType: 'script',
                 cache: false,
                 contentType: false,
                 processData: false,
-                data: {
-                    "latitude": latitude,
-                    "longitude": longitude
-                },
+                dataType: 'JSON',
+                data: form_data,
                 success: function(response){ 
-                            console.log(JSON.stringify(response));
+                    console.log('success: '+ JSON.stringify(response));
                 },
                 error: function(jqXHR, textStatus, errorThrown) { 
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown + " " + jqXHR);
                 }
         })
         //  The new location is saved

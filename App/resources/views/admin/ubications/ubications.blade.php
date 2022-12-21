@@ -142,7 +142,7 @@
                     <h5 class="modal-title" id="staticBackdropLabel">Guardar ubicación</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" id="btnClose2Modal"></button>
                 </div>
-                <form enctype="multipart/form-data" method="post" id="StoreFormData" action="{{ route('ubications.store') }}">
+                <form enctype="multipart/form-data" method="post" id="StoreFormData">
                     @csrf
                     <div class="modal-body">
                         <div class="form-floating mb-3">
@@ -160,7 +160,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" id="btnCancel">Cancelar</button>
-                        <button type="submit" class="btn btn-primary" id="btnSaveFile">Guardar</button>
+                        <button type="button" class="btn btn-primary" id="btnSaveFile">Guardar</button>
                     </div>
                 </form>
             </div>
