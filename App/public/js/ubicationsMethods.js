@@ -123,12 +123,6 @@ btnSaveFile.addEventListener('click', function(){
             }
             file_name = randomName();
             file_type = 'txt';
-        }else{
-            // let tmp_file = JSON.parse(localStorage.getItem('ActualFile'));
-            // localStorage.removeItem('ActualFile');
-            // file_name = tmp_file.file_Name;
-            // file_type = tmp_file.file_type;
-            // route_file = tmp_file.route_file;
         }
         //  The new file and location are uploaded
         // In the case of the text, the object only will have the ubication,
@@ -241,7 +235,6 @@ $(document).on('click', '.select_file', function(){
         btnUploadFile.innerHTML = '';
         btnUploadFile.innerText = 'Subir archivo';
     }, 1500 );
-    // paintModal('"'+randomName()+'"',file_type, path);
     paintModalPreview(selectedFilePath, '"'+randomName()+'"', file_type);
 });
 
