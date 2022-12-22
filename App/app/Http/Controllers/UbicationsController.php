@@ -29,7 +29,7 @@ class UbicationsController extends Controller
     public function store(Request $request){
         $data = request()->validate([
             'tag' => 'required|unique:ubications',
-            'file' => 'required',
+            'file' => '',
             'file_type' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',

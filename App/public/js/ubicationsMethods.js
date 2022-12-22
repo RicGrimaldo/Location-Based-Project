@@ -147,16 +147,14 @@ btnSaveFile.addEventListener('click', function(){
                 data: form_data,
                 success: function(response){ 
                     console.log('success: '+ JSON.stringify(response));
+                    //  The new location is saved
+                    $('#secondModal').modal('hide'); 
+                    showAlert('Datos guardados correctamente', 'success');
                 },
                 error: function(jqXHR, textStatus, errorThrown) { 
                     console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
         })
-        //  The new location is saved
-        // ubications.push(tmp_ubication);
-        // localStorage.setItem('ubications',JSON.stringify(ubications));
-        // $('#secondModal').modal('hide'); 
-        // showAlert('Datos guardados correctamente', 'success');
     }
     else{
         showAlert("Debe ingresar una etiqueta", "error");
