@@ -103,8 +103,7 @@ btnUploadFile.addEventListener('click', function(){
 //  Before saving the file, the empty input validation occurs
 btnSaveFile.addEventListener('click', function(){
     let text = '';
-    let file_name = '', tag = '';
-    let file_type = '', route_file = '';
+    let tag = '';
     tag = UbicationTag.value;
     if(tag.length != 0){
         if(tag.length >= 20){
@@ -150,7 +149,7 @@ btnSaveFile.addEventListener('click', function(){
                     console.log('success: '+ JSON.stringify(response));
                 },
                 error: function(jqXHR, textStatus, errorThrown) { 
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown + " " + jqXHR);
+                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
                 }
         })
         //  The new location is saved
@@ -222,6 +221,8 @@ $(document).on('click', '.select_file', function(){
     var selectedFilePath = $(this).attr("id");
     var file_type = $(this).attr("value");
     flagSelected = true;
+    form_data.append("file_type",file_type);
+    form_data.append("selectedFilePath", selectedFilePath);
     $('#fileListModal').modal('hide'); 
     btnUploadFile.setAttribute('disabled','');
     showAlert("Archivo seleccionado", "success");
@@ -245,7 +246,6 @@ function paintModalPreview(file_data, filename, file_type){
         if(flagSelected){
             flagSelected = false;
             fileCodified = file_data;
-            form_data.append("selectedFilePath", file_data);
         }
         //  In the case to show a preview of the file that will be uploaded
         else{

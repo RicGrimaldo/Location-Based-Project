@@ -7,5 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Ubication extends Model
 {
-    use HasFactory;
+    protected $fillable = [
+            'tag',
+            'file',
+            'file_type',
+            'latitude',
+            'longitude',
+            'text',
+    ];
 }

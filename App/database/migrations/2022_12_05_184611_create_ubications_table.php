@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('ubications', function (Blueprint $table) {
             $table->id();
             $table->string('tag')->unique();
-            $table->string('file');
+            $table->string('file')->nullable();
             $table->string('file_type');
             $table->string('latitude');
             $table->string('longitude');

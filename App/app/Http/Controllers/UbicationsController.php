@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ubication;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -27,7 +28,7 @@ class UbicationsController extends Controller
     
     public function store(Request $request){
         $data = request()->validate([
-            'tag' => 'required',
+            'tag' => 'required|unique:ubications',
             'file' => 'required',
             'file_type' => 'required',
             'latitude' => 'required',
@@ -44,13 +45,15 @@ class UbicationsController extends Controller
             $objExtensions = array('gltf','glb');
             if(in_array($extension, $objExtensions)){
                 $new_name = (string) Str::uuid() . '.' . pathinfo($org_file_name, PATHINFO_EXTENSION);
-                $path = $request->file('file')->storeAs('public/Files', $new_name);
+                $tmp_path = $request->file('file')->storeAs('public/Files', $new_name);
+                $path = Storage::url($tmp_path);
             }
             else{ 
-                $path = $request->file('file')->store('public/Files');
+                $tmp_path = $request->file('file')->store('public/Files');
+                $path = Storage::url($tmp_path);
             }
         }
-        $id = DB::table('users')->insertGetId(
+        $id = Ubication::create(
             [
                 'tag' => $request->tag, 
                 'file' => $path,
