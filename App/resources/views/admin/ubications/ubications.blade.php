@@ -148,6 +148,11 @@
                         <div class="form-floating mb-3">
                             <input name="tag" type="text" class="form-control" id="UbicationTag">
                             <label for="UbicationTag" id="tagLabel">Etiqueta para el archivo: </label>
+                            @error('tag')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
                             <p id="limitCharTag" class="limitChr"></p>
                         </div>
                         <p id="selectedTag">Archivo seleccionado: </p>

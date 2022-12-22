@@ -151,8 +151,11 @@ btnSaveFile.addEventListener('click', function(){
                     $('#secondModal').modal('hide'); 
                     showAlert('Datos guardados correctamente', 'success');
                 },
-                error: function(jqXHR, textStatus, errorThrown) { 
-                    console.log("AJAX error: " + textStatus + ' : ' + errorThrown);
+                error: function (response) {
+                    var errors = $.parseJSON(response.responseText);
+                    $.each(errors, function (key, value) {
+                        showAlert(value, 'error');
+                    });
                 }
         })
     }

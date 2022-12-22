@@ -6,7 +6,8 @@ use App\Models\Ubication;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
+
 
 class UbicationsController extends Controller
 {
@@ -27,14 +28,24 @@ class UbicationsController extends Controller
     }
     
     public function store(Request $request){
-        $data = request()->validate([
+        $validator = Validator::make($request->all(), [
             'tag' => 'required|unique:ubications',
             'file' => '',
             'file_type' => 'required',
             'latitude' => 'required',
             'longitude' => 'required',
             'text' => '',
-        ]);
+        ],
+        [
+            'tag.unique' => 'La etiqueta ya existe, intente con otra distinta.'
+        ]
+    );
+        
+        if($validator->fails()) {
+            // return as appropriate
+            return response()->json($validator->messages(), 422);
+        }
+
         if(isset($request->selectedFilePath)){
             $path = $request->selectedFilePath;
         }
