@@ -50,6 +50,9 @@
                                 </a>
 
                                 <div class="dropdown-menu dropdown-menu-end bg-transparent" aria-labelledby="navbarDropdown">
+
+                                    <a class="dropdown-item" href="{{ route('ubications') }}">Crear ubicación</a>
+
                                     <!-- Change password -->
                                     <a class="dropdown-item" href="{{ route('changePasswordGet') }}">Cambiar contraseña</a>
 

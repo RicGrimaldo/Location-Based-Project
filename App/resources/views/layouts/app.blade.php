@@ -50,6 +50,8 @@
 
                                 <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                     <!-- Change password -->
+                                    <a class="dropdown-item" href="{{ route('ubications') }}">Crear ubicación</a>
+
                                     <a class="dropdown-item" href="{{ route('changePasswordGet') }}">Cambiar contraseña</a>
 
                                     <a class="dropdown-item" href="{{ route('files') }}">Lista de archivos</a>
