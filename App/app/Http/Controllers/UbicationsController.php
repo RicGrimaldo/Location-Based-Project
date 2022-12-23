@@ -42,10 +42,11 @@ class UbicationsController extends Controller
     );
         
         if($validator->fails()) {
-            // return as appropriate
+            // In the case the user insert a tag that already exists
             return response()->json($validator->messages(), 422);
         }
 
+        //  In the case that a server's file is selected, therefore, the path already exists
         if(isset($request->selectedFilePath)){
             $path = $request->selectedFilePath;
         }

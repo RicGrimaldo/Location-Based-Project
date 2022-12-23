@@ -151,11 +151,14 @@ btnSaveFile.addEventListener('click', function(){
                     $('#secondModal').modal('hide'); 
                     showAlert('Datos guardados correctamente', 'success');
                 },
-                error: function (response) {
-                    var errors = $.parseJSON(response.responseText);
-                    $.each(errors, function (key, value) {
-                        showAlert(value, 'error');
-                    });
+                error: function (jqXHR) {
+                    //  In the case that the tag already exists
+                    if (jqXHR.status === 422) {
+                        var errors = $.parseJSON(jqXHR.responseText);
+                        $.each(errors, function (key, value) {
+                            showAlert(value, 'error');
+                        });
+                    }
                 }
         })
     }
