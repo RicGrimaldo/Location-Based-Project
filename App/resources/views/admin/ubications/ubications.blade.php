@@ -53,6 +53,8 @@
 
                                     <a class="dropdown-item" href="{{ route('ubications') }}">Crear ubicación</a>
 
+                                    <a class="dropdown-item" href="{{ route('ubications.list') }}">Lista de ubicaciones</a>
+
                                     <!-- Change password -->
                                     <a class="dropdown-item" href="{{ route('changePasswordGet') }}">Cambiar contraseña</a>
 

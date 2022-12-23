@@ -35,6 +35,7 @@ Route::get('/', [UbicationsController::class, 'index'])->name('ubications');
 Route::controller(UbicationsController::class)->prefix('Ubications')->group(function () {
     Route::post('/{ubication}', 'destroy')->name('ubications.destroy');
     Route::post('/', 'store')->name('ubications.store');
+    Route::get('/list', 'list')->name('ubications.list');
 });
 
 Route::group(['middleware' => 'auth'], function() {

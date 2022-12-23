@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\DB;
 
 class UbicationsController extends Controller
 {
@@ -21,6 +21,12 @@ class UbicationsController extends Controller
     {
         $files = Storage::disk('public')->files('Files');
         return view('admin.ubications.ubications', compact('files'));
+    }
+
+    public function list(){
+        $ubications = Ubication::orderBy('tag')->simplePaginate(5);
+        $ubications->withPath('/Ubications');
+        return view('admin.ubications.list', compact('ubications'));
     }
 
     public function destroy(){
@@ -51,7 +57,7 @@ class UbicationsController extends Controller
             $path = $request->selectedFilePath;
         }
         else{
-            //  El path será el creado al guardar el archivo
+            //  The path will be created when the file is uploaded to the server
             $org_file_name = $request->file('file')->getClientOriginalName();
             $extension = pathinfo($org_file_name, PATHINFO_EXTENSION);
             $objExtensions = array('gltf','glb');
