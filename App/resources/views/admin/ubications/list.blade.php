@@ -10,16 +10,12 @@
                 <div class="card h-100 text-bg-light">
                     <h3 class="card-header bg-transparent">Etiqueta: {{ $ubication->tag }}</h3>
                     <div id="file_view">
-                        @php
-                            $extension = pathinfo($ubication->file, PATHINFO_EXTENSION);
-                            $imgExtensions = array('jpg', 'jpeg', 'png', 'gif');
-                            $objExtensions = array('gltf','glb');
-                        @endphp
-                        @if(in_array($extension, $imgExtensions))
+                        @php($file_type = $ubication->file_type)
+                        @if($file_type == 'img')
                             <img src="{{ asset($ubication->file) }}" 
                             class="card-img-top w-100" 
                             alt="">
-                        @elseif(in_array($extension, $objExtensions))
+                        @elseif($file_type == '3DObj')
                             <div id="div3D">
                                 <model-viewer 
                                     src="{{ asset($ubication->file) }}"
@@ -28,13 +24,15 @@
                                     disable-zoom>
                                 </model-viewer>
                             </div>
-                        @elseif($extension == 'mp4')
+                        @elseif($file_type == 'video')
                             <div class="ratio ratio-16x9">
                                 <video controls>
                                     <source src="{{ asset($ubication->file) }}" type="video/mp4">
                                     Tu navegador no soporta la etiqueta video.
                                 </video>
                             </div>
+                        @elseif($file_type == 'txt')
+                        <p class="card-text">{{ $ubication->text }}</p>
                         @endif
                     </div>
                     <div class="card-body">

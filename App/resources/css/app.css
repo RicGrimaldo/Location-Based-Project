@@ -102,3 +102,14 @@ p#o{
     text-align: center;
     margin: 10px;
 }
+
+.card{
+    border-radius: 10px;
+}
+
+.card-text{
+    border: 2px solid rgb(192, 192, 192);
+    background-color: rgba(255, 255, 255, 0.116);
+    border-radius: 8px;
+    padding: 5px;
+}
