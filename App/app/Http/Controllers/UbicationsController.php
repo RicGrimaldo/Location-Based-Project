@@ -29,8 +29,9 @@ class UbicationsController extends Controller
         return view('admin.ubications.list', compact('ubications'));
     }
 
-    public function destroy(){
-        
+    public function destroy(Ubication $ubication){
+        $ubication->delete();
+        return redirect()->route('ubications.list')->with('delete', 'ok');
     }
     
     public function store(Request $request){

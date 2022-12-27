@@ -41,7 +41,14 @@
                         <p id="longitude">{{ $ubication->longitude }}</p>
                     </div>
                     <div class="card-footer">
-                        <button class="btn btn-danger" style="float: right;" data-id="{{ $ubication->id }}">Eliminar</button>
+                        <form 
+                        action="{{ route('ubications.destroy', $ubication) }}" 
+                        method="POST"
+                        id="form-delete">
+                        {{ csrf_field() }}
+                        {{ method_field('DELETE') }} 
+                            <button type="submit" class="btn btn-danger" style="float: right;" data-id="{{ $ubication->id }}">Eliminar</button>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -51,4 +58,41 @@
 
 {{ $ubications->links() }}
 
+@endsection
+
+@section('js')
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.1/jquery.min.js" integrity="sha512-aVKKRRi/Q/YV+4mjoKBsE4x3H+BkegoM/em46NNlCqNTmUYADjBbeNefNxYV7giUp0VxICtqdrbqU7iVaeZNXA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if(session('delete') == 'ok')
+
+    <script>
+        Swal.fire(
+        '¡Eliminado!',
+        'La ubicación ha sido eliminada con éxito.',
+        'success'
+        )
+    </script>
+
+    @endif
+
+    <script>
+        $('#form-delete').submit(function(e){
+            e.preventDefault();
+            Swal.fire({
+                title: '¿Estás seguro de eliminar esta ubicación?',
+                text: "Se eliminará  definitivamente.",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+                }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            })
+        })
+    </script>
 @endsection
