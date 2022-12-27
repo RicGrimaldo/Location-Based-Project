@@ -122,6 +122,7 @@ btnSaveFile.addEventListener('click', function(){
             }
             file_name = randomName();
             file_type = 'txt';
+            form_data.append("file_type",file_type);
         }
         //  The new file and location are uploaded
         // In the case of the text, the object only will have the ubication,
@@ -157,6 +158,12 @@ btnSaveFile.addEventListener('click', function(){
                         var errors = $.parseJSON(jqXHR.responseText);
                         $.each(errors, function (key, value) {
                             showAlert(value, 'error');
+                        });
+                    }
+                    if (jqXHR.status === 500) {
+                        var errors = $.parseJSON(jqXHR.responseText);
+                        $.each(errors, function (key, value) {
+                            console.log(value, 'error');
                         });
                     }
                 }

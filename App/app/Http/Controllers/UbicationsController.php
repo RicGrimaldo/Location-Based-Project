@@ -52,25 +52,31 @@ class UbicationsController extends Controller
             return response()->json($validator->messages(), 422);
         }
 
-        //  In the case that a server's file is selected, therefore, the path already exists
-        if(isset($request->selectedFilePath)){
-            $path = $request->selectedFilePath;
+        //  In the case that a file is selected, there will be no path.
+        if(!empty($request->text)) {
+            $path = null;
         }
         else{
-            //  The path will be created when the file is uploaded to the server
-            $org_file_name = $request->file('file')->getClientOriginalName();
-            $extension = pathinfo($org_file_name, PATHINFO_EXTENSION);
-            $objExtensions = array('gltf','glb');
-            if(in_array($extension, $objExtensions)){
-                $new_name = (string) Str::uuid() . '.' . pathinfo($org_file_name, PATHINFO_EXTENSION);
-                $tmp_path = $request->file('file')->storeAs('public/Files', $new_name);
-                $path = Storage::url($tmp_path);
-            }
-            else{ 
-                $tmp_path = $request->file('file')->store('public/Files');
-                $path = Storage::url($tmp_path);
+            //  In the case that a server's file is selected, therefore, the path already exists
+            if(isset($request->selectedFilePath)) $path = $request->selectedFilePath;
+            else{
+                //  The path will be created when the file is uploaded to the server
+                $org_file_name = $request->file('file')->getClientOriginalName();
+                $extension = pathinfo($org_file_name, PATHINFO_EXTENSION);
+                $objExtensions = array('gltf','glb');
+                //  To generate an original name for gltf and glb files
+                if(in_array($extension, $objExtensions)){
+                    $new_name = (string) Str::uuid() . '.' . pathinfo($org_file_name, PATHINFO_EXTENSION);
+                    $tmp_path = $request->file('file')->storeAs('public/Files', $new_name);
+                    $path = Storage::url($tmp_path);
+                }
+                else{ 
+                    $tmp_path = $request->file('file')->store('public/Files');
+                    $path = Storage::url($tmp_path);
+                }
             }
         }
+
         $id = Ubication::create(
             [
                 'tag' => $request->tag, 
