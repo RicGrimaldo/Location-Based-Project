@@ -43,10 +43,6 @@
                                     </video>
                                 </div>
                             @endif
-                            <div class="card-body">
-                                <p class="card-text">
-                                </p>
-                            </div>
                             <div class="card-footer">
                                 <form action="{{ route('files.destroy', str_replace('Files/','',$file)) }}" 
                                     class="d-inline float-end" 

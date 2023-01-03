@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Ubication;
 
 class UserController extends Controller
 {
     public function index()
     {
-        return view('welcome');
+        $ubications = Ubication::all();
+        return view('welcome', compact('ubications'));
     }
 }

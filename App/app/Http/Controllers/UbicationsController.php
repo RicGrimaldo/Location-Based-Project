@@ -97,4 +97,9 @@ class UbicationsController extends Controller
             'text' => $request->text,
         ]);
     }
+
+    public function getAll(){
+        
+    }
+
 }

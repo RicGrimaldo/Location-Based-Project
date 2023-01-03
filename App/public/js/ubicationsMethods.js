@@ -127,8 +127,6 @@ btnSaveFile.addEventListener('click', function(){
         //  The new file and location are uploaded
         // In the case of the text, the object only will have the ubication,
         // the tag, the file type and the text itself
-        // tmp_ubication = new Ubication(file_name, tag, file_type, 
-        //                             latitude, longitude, route_file, text);
         form_data.append("tag", tag);
         form_data.append("latitude", latitude);
         form_data.append("longitude", longitude);
@@ -148,9 +146,12 @@ btnSaveFile.addEventListener('click', function(){
                 data: form_data,
                 success: function(response){ 
                     console.log('success: '+ JSON.stringify(response));
-                    //  The new location is saved
-                    $('#secondModal').modal('hide'); 
-                    showAlert('Datos guardados correctamente', 'success');
+                    if(locationValidation()){
+                        //  The new location is saved only after the location validation
+                        $('#secondModal').modal('hide'); 
+                        showAlert('Datos guardados correctamente', 'success');
+                        setTimeout( function() { location.reload(); }, 2500 );
+                    }
                 },
                 error: function (jqXHR) {
                     //  In the case that the tag already exists
@@ -158,12 +159,6 @@ btnSaveFile.addEventListener('click', function(){
                         var errors = $.parseJSON(jqXHR.responseText);
                         $.each(errors, function (key, value) {
                             showAlert(value, 'error');
-                        });
-                    }
-                    if (jqXHR.status === 500) {
-                        var errors = $.parseJSON(jqXHR.responseText);
-                        $.each(errors, function (key, value) {
-                            console.log(value, 'error');
                         });
                     }
                 }
@@ -225,7 +220,11 @@ const fileValidation = function(){
             break;
     }
     return true;
-}
+};
+
+const locationValidation = function(){
+    
+};
 
 //  In the case that a server file is selected
 $(document).on('click', '.select_file', function(){

@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>Laravel</title>
+        <title>{{ config('app.name', 'Location Based Project') }}</title>
 
         <!-- Fonts -->
         <link href="https://fonts.bunny.net/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
@@ -43,12 +43,102 @@
         vr-mode-ui="enabled: false"
         arjs='sourceType: webcam; videoTexture: true; debugUIEnabled: false;'
         renderer='antialias: true; alpha: true'>
-        <a-assets></a-assets>
-            <a-camera gps-projected-camera rotation-reader></a-camera>
-            <div id="scene"></div>
+        @foreach ($ubications as $ubication)
+
+            @php($file_type = $ubication->file_type)
+            
+            @if($file_type == 'img')
+
+                <a-image
+                    src="{{ asset($ubication->file) }}"
+                    scale="1 1 1"
+                    gps-entity-place="latitude:{{$ubication->latitude}}; longitude: {{$ubication->longitude}}"
+                    id="{{ $ubication->id }}"
+                ></a-image>
+
+            @elseif($file_type == '3DObj')
+        
+                <a-assets>
+                    <a-asset-item 
+                        src="{{ asset($ubication->file) }}"
+                        id="{{ $ubication->id }}">
+                    </a-asset-item>
+                </a-assets>
+
+                <a-entity
+                    look-at="[gps-camera]"
+                    rotation="0 360 0"
+                    animation = "property: rotation; dur: 8000; easing: linear; dir: normal; from:0 0 0; to: 0 360 0; loop: false;"
+                    animation-mixer="loop: repeat"
+                    gps-entity-place="latitude:{{$ubication->latitude}}; longitude: {{$ubication->longitude}}"
+                    gltf-model="#{{ $ubication->id }}"
+                    scale="0.5 0.5 0.5"
+                    class="clickable"
+                    gesture-handler 
+                    > 
+                </a-entity>
+
+            @elseif($file_type == 'video')
+
+                <a-assets>
+                    <video
+                        src="{{ asset($ubication->file) }}"
+                        preload="auto"
+                        id="{{ $ubication->id }}"
+                        response-type="arraybuffer"
+                        crossorigin
+                        muted
+                        autoplay
+                        height="240px"
+                        loop
+                    ></video>
+                </a-assets>
+
+                <a-video
+                    src="#{{ $ubication->id }}"
+                    position='0 0.1 0'
+                    videohandler
+                    smooth="true"
+                    smoothCount="10"
+                    smoothTolerance="0.01"
+                    smoothThreshold="5"
+                    autoplay="false"
+                    scale="1 1 1"
+                    gps-entity-place="latitude:{{$ubication->latitude}}; longitude: {{$ubication->longitude}}"
+                ></a-video>
+
+            @elseif($file_type == 'txt')
+                <a-text
+                wrap-count="25"
+                width="auto"
+                value="{{ $ubication->text }}"
+                look-at="[gps-camera]"
+                align="center"
+                anchor="center"
+                baseline="center"
+                gps-entity-place="latitude:{{$ubication->latitude}}; longitude: {{$ubication->longitude}}"
+                id="#{{ $ubication->id }}"
+                ></a-text>
+            @endif
+
+        @endforeach
+        
+        <a-camera gps-projected-camera rotation-reader></a-camera>
     </a-scene>
 
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/js/viewMethods.js"></script>
+
+    @if(count($ubications) == 0)
+        <script>
+            Swal.fire({
+                icon: 'warning',
+                title: 'No hay ninguna ubicación guardada.',
+                showConfirmButton: false,
+                footer: '<a href="{{ route('login') }}" class="btn">Regresar</a>'
+            })
+            setTimeout( function() { window.location.href = "{{ route('login') }}"; }, 4500 );
+        </script>
+    @endif
     </body>
 </html>
