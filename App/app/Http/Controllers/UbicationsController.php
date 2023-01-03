@@ -99,7 +99,7 @@ class UbicationsController extends Controller
     }
 
     public function getAll(){
-        
+        return Ubication::all();
     }
 
 }
