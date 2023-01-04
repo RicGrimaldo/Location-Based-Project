@@ -36,7 +36,7 @@ Route::controller(UbicationsController::class)->prefix('Ubications')->group(func
     Route::delete('/{ubication}', 'destroy')->name('ubications.destroy');
     Route::post('/', 'store')->name('ubications.store');
     Route::get('/list', 'list')->name('ubications.list');
-    Route::get('/getAll', 'getAll')->name('ubications.getAll');
+    Route::post('/compare', 'compare')->name('ubications.compare');
 });
 
 Route::group(['middleware' => 'auth'], function() {

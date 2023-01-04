@@ -7,7 +7,6 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Validator;
-use Illuminate\Support\Facades\DB;
 
 class UbicationsController extends Controller
 {
@@ -97,9 +96,51 @@ class UbicationsController extends Controller
             'text' => $request->text,
         ]);
     }
-
-    public function getAll(){
-        return Ubication::all();
+    
+    
+    public function compare(Request $request){
+        $latitudeFrom = $request->latitude;
+        $longitudeFrom = $request->longitude;
+        $ubications = Ubication::all();
+        $response = "success";
+        $result = 0;
+        foreach($ubications as $ubication){
+            $result = $this->twopoints_on_earth($latitudeFrom, $longitudeFrom, 
+                                    $ubication->latitude, $ubication->longitude);
+            //  The ubication need to be at least 5 mts away from another ubication 
+            if($result < 5){
+                return response()->json(["error" => "Es necesaria una distancia mínima de 5 metros entre ubicaciones. La ubicación más cercana se encuentra a " . $result . " metros"],
+                404);
+            }
+        }
+        return response()->json([
+            'response' => $response,
+            'latitudOrigen' => $latitudeFrom,
+            'longitudOrigen' => $longitudeFrom,
+        ]);
+    }
+    
+    //  Given latitude and longitude in degrees, this method calculates the distance between two points on the earth.
+    private function twopoints_on_earth($latitudeFrom, $longitudeFrom,
+                                    $latitudeTo,  $longitudeTo)
+    {
+        $long1 = deg2rad($longitudeFrom);
+        $long2 = deg2rad($longitudeTo);
+        $lat1 = deg2rad($latitudeFrom);
+        $lat2 = deg2rad($latitudeTo);
+            
+        //Haversine Formula
+        $dlong = $long2 - $long1;
+        $dlati = $lat2 - $lat1;
+            
+        $val = pow(sin($dlati/2),2)+cos($lat1)*cos($lat2)*pow(sin($dlong/2),2);
+            
+        $res = 2 * asin(sqrt($val));
+            
+        $radius = 3958.756;
+            
+        //  The result is in miles, converted to meters
+        return ($res*$radius) * 1609.34;
     }
 
 }

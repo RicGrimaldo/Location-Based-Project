@@ -125,46 +125,48 @@ btnSaveFile.addEventListener('click', function(){
         file_type = 'txt';
         form_data.append("file_type",file_type);
     }
+    //  To validate that the location is not close to another already saved.
+    if(!ubicationValidation(latitude, longitude)){
+        return;
+    }
     //  The new file and location are uploaded
     // In the case of the text, the object only will have the ubication,
     // the tag, the file type and the text itself
-    ubicationValidation(latitude, longitude);
-    // form_data.append("tag", tag);
-    // form_data.append("latitude", latitude);
-    // form_data.append("longitude", longitude);
-    // form_data.append("text", text);
-    // for (var entrie of form_data.entries()) {
-    //     console.log(entrie[0]+ ': ' + entrie[1]); 
-    // }
-    // $.ajax({
-    //         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-    //         url: "/Ubications/",                      
-    //         type: "POST",
-    //         dataType: 'script',
-    //         cache: false,
-    //         contentType: false,
-    //         processData: false,
-    //         dataType: 'JSON',
-    //         data: form_data,
-    //         success: function(response){ 
-    //             console.log('success: '+ JSON.stringify(response));
-    //             if(locationValidation()){
-    //                 //  The new location is saved only after the location validation
-    //                 $('#secondModal').modal('hide'); 
-    //                 showAlert('Datos guardados correctamente', 'success');
-    //                 setTimeout( function() { location.reload(); }, 2500 );
-    //             }
-    //         },
-    //         error: function (jqXHR) {
-    //             //  In the case that the tag already exists
-    //             if (jqXHR.status === 422) {
-    //                 var errors = $.parseJSON(jqXHR.responseText);
-    //                 $.each(errors, function (key, value) {
-    //                     showAlert(value, 'error');
-    //                 });
-    //             }
-    //         }
-    // });
+    form_data.append("tag", tag);
+    form_data.append("latitude", latitude);
+    form_data.append("longitude", longitude);
+    form_data.append("text", text);
+    for (var entrie of form_data.entries()) {
+        console.log(entrie[0]+ ': ' + entrie[1]); 
+    }
+    $.ajax({
+            headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
+            url: "/Ubications/",                      
+            type: "POST",
+            dataType: 'script',
+            cache: false,
+            contentType: false,
+            processData: false,
+            dataType: 'JSON',
+            data: form_data,
+            success: function(response){ 
+                console.log('success: '+ JSON.stringify(response));
+                if(locationValidation()){
+                    $('#secondModal').modal('hide'); 
+                    showAlert('Datos guardados correctamente', 'success');
+                    setTimeout( function() { location.reload(); }, 2500 );
+                }
+            },
+            error: function (jqXHR) {
+                //  In the case that the tag already exists
+                if (jqXHR.status === 422) {
+                    var errors = $.parseJSON(jqXHR.responseText);
+                    $.each(errors, function (key, value) {
+                        showAlert(value, 'error');
+                    });
+                }
+            }
+    });
 });
 
 //  File size and extension file validations
@@ -220,24 +222,21 @@ const fileValidation = function(){
 };
 
 const ubicationValidation = function(lat, long){
-    console.log("Lat: " + lat + " y long: " + long);
+    let form = new FormData();
+    form.append("latitude", lat);
+    form.append("longitude", long);
     $.ajax({
         headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
-        url: "/Ubications/getAll",                      
-        type: "GET",
+        url: "/Ubications/compare",                      
+        type: "POST",
         dataType: 'script',
         cache: false,
         contentType: false,
         processData: false,
         dataType: 'JSON',
+        data: form,
         success: function(response){ 
             console.log(JSON.stringify(response));
-            console.log(response);
-            const result = JSON.stringify(response)
-            let ubicationsList = JSON.parse(result);
-            for(item of ubicationsList){
-                console.log("Compare " + lat + " and " + long + " with " + item.latitude + " and " + item.longitude);
-            }
             return true;
         },
         error: function (jqXHR) {
@@ -246,6 +245,20 @@ const ubicationValidation = function(lat, long){
                 var errors = $.parseJSON(jqXHR.responseText);
                 $.each(errors, function (key, value) {
                     showAlert(value, 'error');
+                });
+                return false;
+            }
+            if (jqXHR.status === 404) {
+                var errors = $.parseJSON(jqXHR.responseText);
+                $.each(errors, function (key, value) {
+                    const Toast = Swal.mixin({
+                        toast: true,
+                        position: 'top-end',
+                    })
+                    Toast.fire({
+                        icon: 'warning',
+                        title: value
+                    })
                 });
                 return false;
             }
