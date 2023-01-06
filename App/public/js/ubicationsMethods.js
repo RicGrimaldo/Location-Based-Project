@@ -136,9 +136,6 @@ btnSaveFile.addEventListener('click', function(){
     form_data.append("latitude", latitude);
     form_data.append("longitude", longitude);
     form_data.append("text", text);
-    for (var entrie of form_data.entries()) {
-        console.log(entrie[0]+ ': ' + entrie[1]); 
-    }
     $.ajax({
             headers: { 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content') },
             url: "/Ubications/",                      
@@ -149,13 +146,22 @@ btnSaveFile.addEventListener('click', function(){
             processData: false,
             dataType: 'JSON',
             data: form_data,
+            beforeSend: function(){
+                btnSaveFile.setAttribute('disabled','');
+                btnSaveFile.innerHTML = 
+                    ` <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    <span>Cargando...</span>`;
+            },
+            complete: function(){
+                btnSaveFile.removeAttribute('disabled');
+                btnSaveFile.innerHTML = '';
+                btnSaveFile.innerText = 'Guardar';
+            },
             success: function(response){ 
                 console.log('success: '+ JSON.stringify(response));
-                if(locationValidation()){
-                    $('#secondModal').modal('hide'); 
-                    showAlert('Datos guardados correctamente', 'success');
-                    setTimeout( function() { location.reload(); }, 2500 );
-                }
+                $('#secondModal').modal('hide'); 
+                showAlert('Datos guardados correctamente', 'success');
+                setTimeout( function() { location.reload(); }, 2500 );
             },
             error: function (jqXHR) {
                 //  In the case that the tag already exists
@@ -223,6 +229,7 @@ const fileValidation = function(){
 
 const ubicationValidation = function(lat, long){
     let form = new FormData();
+    let flag = true;
     form.append("latitude", lat);
     form.append("longitude", long);
     $.ajax({
@@ -234,10 +241,11 @@ const ubicationValidation = function(lat, long){
         contentType: false,
         processData: false,
         dataType: 'JSON',
+        async: false,
         data: form,
         success: function(response){ 
             console.log(JSON.stringify(response));
-            return true;
+            flag = true;
         },
         error: function (jqXHR) {
             //  In the case that the tag already exists
@@ -246,7 +254,7 @@ const ubicationValidation = function(lat, long){
                 $.each(errors, function (key, value) {
                     showAlert(value, 'error');
                 });
-                return false;
+                flag = false;
             }
             if (jqXHR.status === 404) {
                 var errors = $.parseJSON(jqXHR.responseText);
@@ -260,11 +268,12 @@ const ubicationValidation = function(lat, long){
                         title: value
                     })
                 });
-                return false;
+                flag = false;
             }
         }
-    })
-    return false;  
+    });
+    console.log(flag);
+    return flag;
 };
 
 //  In the case that a server file is selected

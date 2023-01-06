@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function() {
             document.getElementById('longitude').innerHTML = `Longitud: ` + position.coords.longitude.toFixed(7);
             latitude = position.coords.latitude.toFixed(7);
             longitude =  position.coords.longitude.toFixed(7);
+            console.log("Latitude: " + latitude + ", longitude: " + longitude );
         });
 });
 

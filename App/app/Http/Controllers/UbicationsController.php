@@ -76,7 +76,7 @@ class UbicationsController extends Controller
                 }
             }
         }
-
+        //  The new ubication will be saved
         $id = Ubication::create(
             [
                 'tag' => $request->tag, 
